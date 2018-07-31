@@ -23,5 +23,4 @@ Step 2. Add the dependency
 	dependencies {
 	        implementation 'com.github.rmtic:EasyDesign:1.0.2'
 	}
-Share this release:
 

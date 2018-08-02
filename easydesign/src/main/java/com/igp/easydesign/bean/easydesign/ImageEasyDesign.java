@@ -1,6 +1,7 @@
 package com.igp.easydesign.bean.easydesign;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -27,6 +28,30 @@ public class ImageEasyDesign extends BaseEasyDesign{
         if (bitmap != null) {
             canvas.drawBitmap(bitmap, matrix, paint);
         }
+    }
+
+    /**
+     * 获取图片的动态宽
+     * @return
+     */
+    public int getDynamicWidthDp() {
+        int width = 0;
+        if (dstPs != null && dstPs.length > 0) {
+            width  = (int) Math.round(Math.sqrt(Math.pow(dstPs[0] - dstPs[4],2)+ Math.pow(dstPs[1] - dstPs[5],2)));
+        }
+        return (int) width;
+    }
+
+    /**
+     * 获取图片的动态高
+     * @return
+     */
+    public int getDynamicHeightDp() {
+        int height = 0;
+        if (dstPs != null && dstPs.length > 0) {
+        height = (int) Math.round(Math.sqrt(Math.pow(dstPs[4] - dstPs[8],2)+ Math.pow(dstPs[5] - dstPs[9],2)));
+        }
+        return  height;
     }
 
 

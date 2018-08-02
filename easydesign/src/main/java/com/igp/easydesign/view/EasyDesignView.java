@@ -3,10 +3,12 @@ package com.igp.easydesign.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.igp.easydesign.bean.easycontrol.EasyControl;
-import com.igp.easydesign.bean.easycontrol.OnBindEasyDesignListener;
+import com.igp.easydesign.bean.easycontrol.OnChangeEasyDesignListener;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
+import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.mask.EasyMask;
 import com.igp.easydesign.bean.space.EasySpace;
 
@@ -17,20 +19,14 @@ import java.util.List;
  * Created by qiu on 2018/7/27.
  */
 
-public class EasyDesignView extends BaseEasyDesignView implements OnBindEasyDesignListener {
+public class EasyDesignView extends BaseEasyDesignView {
 
 
     private Context context;                                        //上下文
     public List<BaseEasyDesign> baseEasyDesigns = new ArrayList<>();//会员设计集合
-    public EasyControl          easyControl;                        //控制器
-    public EasySpace            easySpace;                          //设计区
+    public EasyControl          easyControl     = new EasyControl();//控制器
+    public EasySpace            easySpace;                          //设计区 //TODO 待开发 设计平台基本信息
     public EasyMask             easyMask;                           //遮罩层图片
-
-    /*
-        private List<BaseEasyDesign> baseEasyDesigns = new ArrayList<>();   //会员设计集合
-                                                                            //TODO 待开发 设计平台基本信息
-    */
-
 
 
     @Override
@@ -49,12 +45,10 @@ public class EasyDesignView extends BaseEasyDesignView implements OnBindEasyDesi
     }
 
 
-
-
     @Override
     public void setEasyControl(EasyControl easyControl) {
         this.easyControl = easyControl;
-        this.easyControl.setOnBindEasyDesignListener(this);
+        //this.easyControl.setOnChangeEasyDesignListener(this);
 
     }
 
@@ -76,6 +70,13 @@ public class EasyDesignView extends BaseEasyDesignView implements OnBindEasyDesi
     public EasyDesignView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
+    }
+
+    @Override
+    public void setEasyIconList(List<EasyIcon> easyIconList) {
+        if (getEasyControl() != null) {
+            getEasyControl().setEasyIconList(easyIconList);
+        }
     }
 
 
@@ -100,16 +101,24 @@ public class EasyDesignView extends BaseEasyDesignView implements OnBindEasyDesi
         if (getEasyControl() == null) {
             return;
         }
-        //选中产品
-        if (getBaseEasyDesigns().contains(easyDesign)) {
+        //刷新BaseEasyDesign 的 isSelected
+        if(baseEasyDesigns.contains(easyDesign)){
             for (BaseEasyDesign baseEasyDesign : getBaseEasyDesigns()) {
                 baseEasyDesign.setSelected(easyDesign.equals(baseEasyDesign));
             }
+        }else{
+            notSelectAll();
         }
-        //刷新绑定
+
+        //刷新绑定，重复则无需再绑定
         if (getEasyControl()!= null && getEasyControl().getBindEasyDesign() != easyDesign){
             getEasyControl().bindEasyDesign(easyDesign);
         }
+
+
+
+
+
         invalidate();
     }
 
@@ -183,7 +192,7 @@ public class EasyDesignView extends BaseEasyDesignView implements OnBindEasyDesi
         invalidate();
     }
 
-    @Override
+    /*@Override
     public void onBindEasyDesignListener(BaseEasyDesign easyDesign) {
         //设置选中
         if(baseEasyDesigns.contains(easyDesign)){
@@ -192,5 +201,6 @@ public class EasyDesignView extends BaseEasyDesignView implements OnBindEasyDesi
             notSelectAll();
         }
         invalidate();
-    }
+    }*/
+
 }

@@ -5,11 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
@@ -26,7 +23,7 @@ import java.util.List;
 
 public class EasyControl extends BaseEasyControl {
 
-    private OnBindEasyDesignListener onBindEasyDesignListener;
+    //private OnChangeEasyDesignListener onChangeEasyDesignListener;
     private BaseEasyDesign easyDesign;
     private float []       srcPs   ,dstPs;
     public RectF           srcRect ,dstRect;
@@ -42,9 +39,9 @@ public class EasyControl extends BaseEasyControl {
     @Override
     public void bindEasyDesign(BaseEasyDesign easyDesign) {
         this.easyDesign = easyDesign;
-        if (onBindEasyDesignListener != null) {
-            onBindEasyDesignListener.onBindEasyDesignListener(this.easyDesign);
-        }
+        /*if (onChangeEasyDesignListener != null) {
+            onChangeEasyDesignListener.onBindEasyDesignListener(this.easyDesign);
+        }*/
     }
 
     @Override
@@ -66,9 +63,9 @@ public class EasyControl extends BaseEasyControl {
 
     @Override
     public void drawDstRectBg(@NonNull Canvas canvas) {
+        if (canvas == null) {return;}
         if (easyDesign == null){ return; }
         if (easyDesign.getDstRect() == null) {return;}
-        if (canvas == null) {return;}
         Paint paintTip = new Paint();
         paintTip.setStyle(Paint.Style.FILL);
         paintTip.setColor(Color.WHITE);
@@ -84,9 +81,9 @@ public class EasyControl extends BaseEasyControl {
 
     @Override
     public void drawDstPsPoint(@NonNull Canvas canvas) {
+        if (canvas == null) {return;}
         if (easyDesign == null){ return; }
         if (easyDesign.getDstPs() == null) {return;}
-        if (canvas == null) {return;}
         if (easyDesign.getDstPs().length < 1){return;}
         dstPs = easyDesign.getDstPs();
         if (dstPs != null) {
@@ -102,9 +99,9 @@ public class EasyControl extends BaseEasyControl {
 
     @Override
     public void drawDstPsLine(@NonNull Canvas canvas) {
+        if (canvas == null) {return;}
         if (easyDesign == null){ return; }
         if (easyDesign.getDstPs() == null) {return;}
-        if (canvas == null) {return;}
         if (easyDesign.getDstPs().length < 1){return;}
         dstPs = easyDesign.getDstPs();
         if (dstPs != null) {
@@ -121,9 +118,10 @@ public class EasyControl extends BaseEasyControl {
 
     @Override
     public void drawGridLine(@NonNull Canvas canvas) {
-        if(easyDesign == null){ return; }
-        if (easyDesign.getDstRect() == null) {return;}
         if (canvas == null) {return;}
+        if (easyDesign == null){ return; }
+        if (easyDesign.getDstRect() == null) {return;}
+
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(2);
@@ -277,9 +275,17 @@ public class EasyControl extends BaseEasyControl {
     }
 
     /**设置绑定设计监听*/
-    public void setOnBindEasyDesignListener(OnBindEasyDesignListener onBindEasyDesignListener) {
-        this.onBindEasyDesignListener = onBindEasyDesignListener;
-    }
+    /*public void setOnChangeEasyDesignListener(OnChangeEasyDesignListener onChangeEasyDesignListener) {
+        this.onChangeEasyDesignListener = onChangeEasyDesignListener;
+    }*/
+
+    /**
+     * 获取事件
+     * @return
+     */
+    /*public OnChangeEasyDesignListener getOnChangeEasyDesignListener(){
+        return this.onChangeEasyDesignListener;
+    }*/
 
     /**获取警告图标*/
     public Bitmap getBitmapWarning() {

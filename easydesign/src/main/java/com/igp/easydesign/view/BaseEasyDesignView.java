@@ -30,6 +30,8 @@ import java.util.List;
 
 public abstract class BaseEasyDesignView extends View  {
 
+    public OnEasyDesignViewListener onEasyDesignViewListener;
+
     //TODO 待开发 设计平台基本信息
     //会员手势操作行为 [ 无 , 拖拽 , 缩放 , 旋转 ]
     public int actionMode;
@@ -49,7 +51,7 @@ public abstract class BaseEasyDesignView extends View  {
 
     //获取遮罩
 
-    public abstract EasyMask getEasyMask();                                                       //获取设计区
+    public abstract EasyMask getEasyMask();                                                         //获取设计区
     public abstract EasySpace getEasySpace();                                                       //获取设计区
     public abstract List<BaseEasyDesign> getBaseEasyDesigns();                                      //获取设计组
     public abstract void        setEasyControl(EasyControl easyControl);                            //设置控制器
@@ -105,6 +107,17 @@ public abstract class BaseEasyDesignView extends View  {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        if (onEasyDesignViewListener != null && getSelectedEasyDesign() != null) {
+            onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign());
+        }
+/*
+        if (getEasyControl() != null && getEasyControl().getBindEasyDesign() != null && getEasyControl().getOnChangeEasyDesignListener() != null) {
+            if (getEasyControl().getBindEasyDesign() instanceof ImageEasyDesign) {
+                getEasyControl().getOnChangeEasyDesignListener().onSizeChange(((ImageEasyDesign) getEasyControl().getBindEasyDesign()).getDynamicWidthDp(),((ImageEasyDesign) getEasyControl().getBindEasyDesign()).getDynamicHeightDp());
+            }
+        }*/
+
 
         /** 绘制控制层,绘制矩阵范围的背景 */
         if (getEasyControl() != null && getEasyControl().getBindEasyDesign() != null ) {
@@ -234,15 +247,17 @@ public abstract class BaseEasyDesignView extends View  {
             actionMode = ACTION_DRAG;
             for (BaseEasyDesign baseEasyDesign : getBaseEasyDesigns()) {
                 if(isInEasyDesignBitmap(baseEasyDesign.matrix,baseEasyDesign.getSrcRect(),downPoint)){//如果在图片上
-                    if (getEasyControl() != null) {
+                    setSelectedEasyDesign(baseEasyDesign);
+                    /*if (getEasyControl() != null) {
                         getEasyControl().bindEasyDesign(baseEasyDesign);                     //控制器设置选中设计
-                    }
+                    }*/
                 }
             }
         }else{
             actionMode = ACTION_NONE;
             if (getEasyControl() != null) {
-                getEasyControl().bindEasyDesign(null);
+                setSelectedEasyDesign(null);
+                //getEasyControl().bindEasyDesign(null);
             }
         }
     }
@@ -357,6 +372,7 @@ public abstract class BaseEasyDesignView extends View  {
     }
 
 
+    public abstract void setEasyIconList(List<EasyIcon> easyIconList);
 
 
     /**
@@ -478,5 +494,9 @@ public abstract class BaseEasyDesignView extends View  {
             }
         });
         valueAnimator.start();
+    }
+
+    public void setOnEasyDesignViewListener(OnEasyDesignViewListener onEasyDesignViewListener) {
+        this.onEasyDesignViewListener = onEasyDesignViewListener;
     }
 }

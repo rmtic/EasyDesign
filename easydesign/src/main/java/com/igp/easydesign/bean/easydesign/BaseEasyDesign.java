@@ -27,6 +27,7 @@ public abstract class BaseEasyDesign  {
         this.srcRect = srcRect;
         this.dstRect = dstRect;
         this.matrix  = matrix;
+        update();//初次创建需要刷新
     }
 
     public Paint getPaint() {

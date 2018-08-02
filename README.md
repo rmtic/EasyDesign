@@ -14,6 +14,6 @@ To get a Git project into your build:
 Step 2. Add the dependency
 
 	dependencies {
-	        implementation 'com.github.rmtic:EasyDesign:1.0.2'
+	        implementation 'com.github.rmtic:EasyDesign:1.0.3'
 	}
 

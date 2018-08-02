@@ -5,8 +5,6 @@ group = 'com.github.rmtic'
 android {
     compileSdkVersion 27
 
-
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 27
@@ -35,4 +33,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.blankj:utilcode:1.17.3'
     compile 'org.michaelevans.colorart:library:0.0.3'
+
 }

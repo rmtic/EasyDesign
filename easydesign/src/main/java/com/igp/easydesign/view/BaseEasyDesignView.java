@@ -105,21 +105,25 @@ public abstract class BaseEasyDesignView extends View  {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
         /** 绘制控制层,绘制矩阵范围的背景 */
         if (getEasyControl() != null && getEasyControl().getBindEasyDesign() != null ) {
             getEasyControl() .drawDstRectBg(canvas);
         }
         /**绘制设计区域*/
-        getEasySpace().draw(canvas);
+        if (getEasySpace() != null) {
+            getEasySpace().draw(canvas);
+        }
 
         /** 绘制绘制所有设计 */
-
         for (BaseEasyDesign baseEasyDesign : getBaseEasyDesigns()) {
             baseEasyDesign.getPaint().setAlpha(255);
             baseEasyDesign.draw(canvas);
         }
         /** 绘制遮罩蒙版 */
-        getEasyMask().draw(canvas);
+        if (getEasyMask() != null) {
+            getEasyMask().draw(canvas);
+        }
 
         /** 绘制半透明所有设计 */
         for (BaseEasyDesign baseEasyDesign : getBaseEasyDesigns()) {
@@ -392,11 +396,13 @@ public abstract class BaseEasyDesignView extends View  {
      * @return
      */
     private boolean isInEasyIcon(float[] downPoint) {
-        for (EasyIcon easyIcon : getEasyControl().getEasyIconList()) {
-            if (easyIcon.getEasyIconType() == EasyIconType.RIGHT_BOTTOM && easyIcon.getRectF().contains(downPoint[0],downPoint[1])) {
-                //如果是右下角的按钮，设置为可以旋转和放大的功能；
-                actionMode = ACTION_SCALE_AND_ROTATE;
-                return true;
+        if (getEasyControl() != null) {
+            for (EasyIcon easyIcon : getEasyControl().getEasyIconList()) {
+                if (easyIcon.getEasyIconType() == EasyIconType.RIGHT_BOTTOM && easyIcon.getRectF().contains(downPoint[0],downPoint[1])) {
+                    //如果是右下角的按钮，设置为可以旋转和放大的功能；
+                    actionMode = ACTION_SCALE_AND_ROTATE;
+                    return true;
+                }
             }
         }
         return false;

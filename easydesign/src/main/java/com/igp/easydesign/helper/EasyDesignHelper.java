@@ -1,6 +1,7 @@
 package com.igp.easydesign.helper;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -39,6 +40,39 @@ public class EasyDesignHelper {
      */
     public Bitmap getLocalBitmap(int res){
         return BitmapFactory.decodeResource(this.context.getResources(), res);
+    }
+
+
+    /**
+     * 获取图片的原始宽
+     * @param res
+     * @param drawableId
+     * @return
+     */
+    public int getImageOrgWidth(Resources res,int drawableId){
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res,drawableId , opts);
+        opts.inSampleSize = 1;
+        opts.inJustDecodeBounds = false;
+        int width = opts.outWidth;
+        return width;
+    }
+
+    /**
+     * 获取图片的原始高
+     * @param res
+     * @param drawableId
+     * @return
+     */
+    public int getImageOrgHeight(Resources res,int drawableId){
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res,drawableId , opts);
+        opts.inSampleSize = 1;
+        opts.inJustDecodeBounds = false;
+        int height = opts.outHeight;
+        return height;
     }
 
     /**

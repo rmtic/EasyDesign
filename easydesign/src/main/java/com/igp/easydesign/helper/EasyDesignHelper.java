@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.igp.easydesign.bean.easydesign.ImageEasyDesign;
 import com.igp.easydesign.bean.mask.EasyMask;
@@ -178,6 +179,43 @@ public class EasyDesignHelper {
             }
         }
         return degree;
+    }
+
+    /**
+     *
+     * @param easyDesign                    图片设计
+     * @param imageOriginalWidthDp          图片的原始宽度
+     * @param imageOriginalHeightDp         图片的原始高度
+     * @param areaDesignWidthPx             设计去的宽度
+     * @param areaDesignHeightPx            设计区的高度
+     * @param paramsWidthCM                 产品打印区的CM
+     * @return
+     */
+    public static boolean isBlurImage(ImageEasyDesign easyDesign,int imageOriginalWidthDp,int imageOriginalHeightDp,int areaDesignWidthPx,int areaDesignHeightPx,int paramsWidthCM){
+        int imageDynamicWidthDp = ((ImageEasyDesign) easyDesign).getDynamicWidthDp();
+        int imageDynamicHeightDp = ((ImageEasyDesign) easyDesign).getDynamicHeightDp();
+
+        int                imageDynamicWidthPx   = ConvertUtils.dp2px(imageDynamicWidthDp);     //动态宽度
+        int                imageDynamicHeightPx  = ConvertUtils.dp2px(imageDynamicHeightDp);    //动态高度
+
+        int                imageOriginalWidthPx  = ConvertUtils.dp2px(imageOriginalWidthDp);     //原始宽度
+        int                imageOriginalHeightPx = ConvertUtils.dp2px(imageOriginalHeightDp);    //原始高度
+
+        //int                areaDesignWidthPx   = Integer.parseInt(mProduct.getDesign().getFront().get(0).get(1).getWidth().replace("px",""));  //设计区宽度
+        //int                areaDesignHeightPx  = Integer.parseInt(mProduct.getDesign().getFront().get(0).get(1).getHeight().replace("px","")); //设计区高度
+
+        //Params params              = new Gson().fromJson(mProduct.getDesign().getParams().get("front-0"),Params.class);
+        //int                paramsWidthCM       = (int) Float.parseFloat(params.width);                                                                                         //paramsWidth
+        //int                paramsHeightCM      = (int) Float.parseFloat(params.height);                                                                                        //paramsHeight
+        float              sizecn              = (float)(paramsWidthCM / 0.02 / areaDesignWidthPx);                                                                            //SizeCn
+        int                imageMaxWidthPx     = (int) (imageOriginalWidthPx * sizecn);                                                                                        //图片最多宽度
+        int                imageMaxHeightPx    = (int) (imageOriginalHeightPx * sizecn);                                                                                       //图片最大高度
+
+        if(imageDynamicHeightPx > imageMaxHeightPx || imageDynamicWidthPx > imageMaxWidthPx){
+            return true;
+
+        }
+        return false;
     }
 
 }

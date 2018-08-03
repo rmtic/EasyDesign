@@ -1,0 +1,48 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.youli.feiyu.fynotification.MainActivity">
+
+
+    <item
+        android:id="@+id/action_add_imagedesign"
+        android:orderInCategory="0"
+        android:title="添加图片设计"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_del_imagedesign"
+        android:orderInCategory="0"
+        android:title="删除图片设计"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_sel_imagedesign1"
+        android:orderInCategory="0"
+        android:title="选中图片设计1"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_del_alldesign"
+        android:orderInCategory="0"
+        android:title="清空所有设计"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_amplification"
+        android:orderInCategory="0"
+        android:title="放大"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_narrow"
+        android:orderInCategory="0"
+        android:title="缩小"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_anim_to_rotate0"
+        android:orderInCategory="0"
+        android:title="恢复到0度"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_anim_rotate30"
+        android:orderInCategory="0"
+        android:title="旋转30度"
+        app:showAsAction="ifRoom" />
+
+</menu>

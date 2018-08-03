@@ -109,6 +109,11 @@ public abstract class BaseEasyDesignView extends View  {
         super.onDraw(canvas);
 
         if (onEasyDesignViewListener != null && getSelectedEasyDesign() != null) {
+
+
+
+
+
             onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign());
         }
 /*
@@ -148,6 +153,7 @@ public abstract class BaseEasyDesignView extends View  {
 
         /** 绘制控制层 */
         if (getEasyControl() != null && getEasyControl().getBindEasyDesign() != null ){
+            getEasyControl().drawDstPsLine(canvas);
             getEasyControl().drawDstRectLine(canvas);                                               //绘制矩阵范围的框
             getEasyControl().drawGridLine(canvas);                                                  //绘制矩阵范围的网格
             getEasyControl().drawDstPsPoint(canvas);                                                //绘制矩阵范围的框

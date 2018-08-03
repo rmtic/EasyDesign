@@ -5,12 +5,14 @@ import android.graphics.RectF;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 
-import com.igp.easydesign.bean.easycontrol.EasyControl;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
-import com.igp.easydesign.bean.easydesign.ImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.ImageEasyDesignType;
+import com.igp.easydesign.bean.easydesign.text.TextEasyDesign;
 import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.icon.EasyIconType;
 import com.igp.easydesign.bean.mask.EasyMask;
@@ -18,19 +20,73 @@ import com.igp.easydesign.bean.space.EasySpace;
 import com.igp.easydesign.helper.EasyDesignHelper;
 import com.igp.easydesign.view.EasyDesignView;
 import com.igp.easydesign.view.OnEasyDesignViewListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
    // DesignView designView;
     private EasyDesignView   mEasyDesignView;
-    private EasyDesignHelper mEasyDesignHelper;
-    private Button btnRoate,btnRoateZero,btnSelect1,btnSelect2;
+    private Button btnRoate,btnRoateZero,btnSelect1,btnSelect2,btnNarrow,btnAmplification;
 
     ImageEasyDesign imageEasyDesign1;
     ImageEasyDesign imageEasyDesign2;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_add_imagedesign:
+                mEasyDesignView.addEasyDesign(imageEasyDesign1);
+                break;
+            case R.id.action_del_imagedesign:
+                if(mEasyDesignView.getSelectedEasyDesign() != null){
+                    mEasyDesignView.removeSelectedEasyDesign();
+                }
+                break;
+            case R.id.action_del_alldesign:
+                mEasyDesignView.removeAllEasyDesign();
+                break;
+            case R.id.action_sel_imagedesign1:
+                if (imageEasyDesign1 != null) {
+                    mEasyDesignView.setSelectedEasyDesign(imageEasyDesign1);
+                }
+            case R.id.action_amplification:
+                if (mEasyDesignView.getSelectedEasyDesign() != null) {
+                    mEasyDesignView.getSelectedEasyDesign().postScale(1.02f,1.02f);//新版本
+                    mEasyDesignView.invalidate();
+                }
+                break;
+            case R.id.action_narrow:
+                if (mEasyDesignView.getSelectedEasyDesign() != null) {
+                    mEasyDesignView.getSelectedEasyDesign().postScale(0.98f,0.98f);
+                    mEasyDesignView.invalidate();
+                }
+                break;
+            case R.id.action_anim_to_rotate0:
+                if (mEasyDesignView.getSelectedEasyDesign() != null) {
+                    mEasyDesignView.rotate2Degree(0);
+                }
+                break;
+            case R.id.action_anim_rotate30:
+                if (mEasyDesignView.getSelectedEasyDesign() != null) {
+                    mEasyDesignView.rotateValueAnimator(30);
+                }
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +94,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
        mEasyDesignView   = findViewById(R.id.easydesignview);
-       btnRoate          = findViewById(R.id.btn_roate);
-       btnRoateZero      = findViewById(R.id.btn_roate_zero);
-       btnSelect1        = findViewById(R.id.btn_select1);
-       btnSelect2        = findViewById(R.id.btn_select2);
 
-       /**帮助类*/
-      mEasyDesignHelper = new EasyDesignHelper(this);                                      //帮助会员相关创建
 
        /**创建相关图片*/
-       Bitmap bitmap1           = mEasyDesignHelper.getLocalBitmap(R.mipmap.test);                  //创建【图片设计1】
-       Bitmap bitmap2           = mEasyDesignHelper.getLocalBitmap(R.mipmap.a);                     //创建【图片设计2】
-       Bitmap bitmapWarning     = mEasyDesignHelper.getLocalBitmap(R.mipmap.ic_warning);            //创建【警告     】图片
-       Bitmap draftBoxUncheck   = mEasyDesignHelper.createEasyIconBitmap(mEasyDesignHelper.getLocalBitmap(R.drawable.draft_box_uncheck));   //创建【旋转+放大】图片
-       imageEasyDesign1  = mEasyDesignHelper.createImageDesign(bitmap1);                            //创建【图片设计 】
-       imageEasyDesign2  = mEasyDesignHelper.createImageDesign(bitmap2);                            //创建【图片设计 】
+       Bitmap bitmap1           = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.test);                  //创建【图片设计1】
+       Bitmap bitmap2           = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.a);                     //创建【图片设计2】
+       Bitmap bitmapWarning     = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.ic_warning);            //创建【警告     】图片
+       Bitmap draftBoxUncheck   = EasyDesignHelper.createEasyIconBitmap(EasyDesignHelper.getLocalBitmap(MainActivity.this,R.drawable.draft_box_uncheck));//创建【旋转+放大】图片
+       imageEasyDesign1  = EasyDesignHelper.createImageDesign(bitmap1, ImageEasyDesignType.LOCAL_ALBUM);                                //创建【图片设计 】 本地图片类型
+       imageEasyDesign2  = EasyDesignHelper.createImageDesign(bitmap2, ImageEasyDesignType.REMOTE_ALBUM);                               //创建【图片设计 】 远程图片类型
+
+
+
 
        RectF markerCopyRect    = new RectF(0, 0, draftBoxUncheck.getWidth(), draftBoxUncheck.getHeight());//旋转+放大 标记边界
 
@@ -61,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EasySpace easySpace = EasyDesignHelper.createEasySpace();
         mEasyDesignView.setEasySpace(easySpace);
 
-        EasyMask easyMask = EasyDesignHelper.createEasyMask(mEasyDesignHelper.getLocalBitmap(R.drawable.bg_mask));
+        EasyMask easyMask = EasyDesignHelper.createEasyMask(EasyDesignHelper.getLocalBitmap(MainActivity.this,R.drawable.bg_mask));
         mEasyDesignView.setEasyMask(easyMask);
 
        List<EasyIcon> easyIconList = new ArrayList<>();                                             //控制器【图标集合】
@@ -78,8 +131,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        });
 
         /** 相关手动操作设计的实现 */
+
        mEasyDesignView.addEasyDesign(imageEasyDesign1);                                             //添加一个图片设计模型
        mEasyDesignView.addEasyDesign(imageEasyDesign2);                                             //添加一个图片设计模型
+
+
+
+       TextEasyDesign textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE"); //文本设计
+       mEasyDesignView.addEasyDesign(textEasyDesign);                                               //添加文本设计
+       mEasyDesignView.setSelectedEasyDesign(textEasyDesign);                                        //选中文本设计
+       textEasyDesign.postTranslate(300,300);
+        mEasyDesignView.invalidate();
+
+
 
        /** 相关手动操作设计的实现 */
        //mEasyDesignView.setSelectedEasyDesign(imageEasyDesign2);                                   //手动操作【选中】
@@ -87,12 +151,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        //imageEasyDesign2.postRotate(45);                                                           //手动操作【旋转】
        //动画旋转
        //动画放大
-
-       /**MainActivity 按钮操作的事件*/
-       btnRoate    .setOnClickListener(this);                                                       //旋转
-       btnRoateZero.setOnClickListener(this);                                                       //旋转
-       btnSelect1  .setOnClickListener(this);                                                       //选中1
-       btnSelect2  .setOnClickListener(this);                                                       //选中2
     }
 
     /**
@@ -124,42 +182,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    /**
-         1. 获取换算比例： Scale = 设计区宽度 (px)  / 设计区宽度 (cm);
-         2. 图片宽（px）* 0.02 = 图片最大宽度 cm
-            图片高  (px)   * 0.02  = 图片最大高度 cm
-         3. 每次拖放设计图所获取的cm ,如果 > 最大宽或者高 ，表示模糊；
-         例如：设计图宽 / scale  的得到的 cm
-         4. 注意（如果是手机端：手机屏幕宽度换算成500宽度，在换算成第一条提到的Scale的比例；）
-         5. 停止拖动和生成数据都要判断模糊
-     */
-
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_roate:
-                /*if ( mEasyDesignView.getSelectedEasyDesign() != null) {
-                    mEasyDesignView.getSelectedEasyDesign().postRotate(10);
-                    mEasyDesignView.invalidate();
-                }*/
-                mEasyDesignView.rotateValueAnimator(30);
-                break;
-            case R.id.btn_roate_zero:
-                mEasyDesignView.rotate2Degree(0);
-                break;
-            case R.id.btn_select1:
-                if (imageEasyDesign1 != null) {
-                    mEasyDesignView.setSelectedEasyDesign(imageEasyDesign1);
-                }
-                break;
-            case R.id.btn_select2:
-                if (imageEasyDesign2 != null) {
-                    mEasyDesignView.setSelectedEasyDesign(imageEasyDesign2);
-                }
-                break;
-            default:
-                break;
-        }
-    }
 }

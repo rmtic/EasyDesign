@@ -168,6 +168,7 @@ public class EasyDesignView extends BaseEasyDesignView {
         invalidate();
     }
 
+
     /**
      * 方法：移除设计
      * 说明：从[会员设计集合]移除[设计]
@@ -178,6 +179,28 @@ public class EasyDesignView extends BaseEasyDesignView {
             return;
         }
         baseEasyDesigns.remove(easyDesign);
+        invalidate();
+    }
+
+    /**
+     * 移除当前的设计
+     */
+    public void removeSelectedEasyDesign(){
+        if (getSelectedEasyDesign() != null) {
+            baseEasyDesigns.remove(getSelectedEasyDesign());
+            setSelectedEasyDesign(null);
+        }
+        invalidate();
+    }
+
+    /**
+     * 清空所有设计
+     */
+    public void removeAllEasyDesign(){
+        if (getSelectedEasyDesign() != null) {
+            baseEasyDesigns.clear();
+            setSelectedEasyDesign(null);
+        }
         invalidate();
     }
 

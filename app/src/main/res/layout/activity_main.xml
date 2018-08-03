@@ -1,70 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.igp.design.MainActivity">
+    tools:context="com.igp.design.MainActivity"
+    android:orientation="vertical">
     <com.igp.easydesign.view.EasyDesignView
         android:id="@+id/easydesignview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/crop__texture"/>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/btn_roate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/white"
-                android:text="旋转 30 度"/>
-            <Button
-                android:id="@+id/btn_roate_zero"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/white"
-                android:text="恢复"/>
-            <Button
-                android:id="@+id/btn_narrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/white"
-                android:text="Narrow"/>
-            <Button
-                android:id="@+id/btn_amplification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/white"
-                android:text="Amplification"/>
-            <Button
-                android:id="@+id/btn_select1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/white"
-                android:text="选中第1个"/>
-            <Button
-                android:id="@+id/btn_select2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/white"
-                android:text="选中第2个"/>
-        </LinearLayout>
-    </ScrollView>
-
-</RelativeLayout>
+</LinearLayout>

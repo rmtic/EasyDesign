@@ -15,9 +15,13 @@ import android.graphics.RectF;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.ScreenUtils;
-import com.igp.easydesign.bean.easydesign.ImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.ImageEasyDesignType;
+import com.igp.easydesign.bean.easydesign.text.TextEasyDesign;
 import com.igp.easydesign.bean.mask.EasyMask;
 import com.igp.easydesign.bean.space.EasySpace;
+import com.igp.easydesign.view.BaseEasyDesignView;
 
 import org.michaelevans.colorart.library.ColorArt;
 
@@ -28,19 +32,13 @@ import org.michaelevans.colorart.library.ColorArt;
 
 public class EasyDesignHelper {
 
-    private Context context;
-
-    public EasyDesignHelper(Context context) {
-        this.context = context;
-    }
-
     /**
      * 获取本地图片的Bitmap
      * @param res
      * @return
      */
-    public Bitmap getLocalBitmap(int res){
-        return BitmapFactory.decodeResource(this.context.getResources(), res);
+    public static Bitmap getLocalBitmap(Context context,int res){
+        return BitmapFactory.decodeResource(context.getResources(), res);
     }
 
 
@@ -50,7 +48,7 @@ public class EasyDesignHelper {
      * @param drawableId
      * @return
      */
-    public int getImageOrgWidth(Resources res,int drawableId){
+    public static int getImageOrgWidth(Resources res,int drawableId){
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res,drawableId , opts);
@@ -66,7 +64,7 @@ public class EasyDesignHelper {
      * @param drawableId
      * @return
      */
-    public int getImageOrgHeight(Resources res,int drawableId){
+    public static int getImageOrgHeight(Resources res,int drawableId){
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res,drawableId , opts);
@@ -81,7 +79,7 @@ public class EasyDesignHelper {
      * @param bitmap
      * @return
      */
-    public Bitmap createEasyIconBitmap(Bitmap bitmap){
+    public static Bitmap createEasyIconBitmap(Bitmap bitmap){
         Bitmap resultBitmap = Bitmap.createBitmap(80,80,Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(resultBitmap);
         RectF rectF = new RectF(0,0,80,80);
@@ -127,7 +125,7 @@ public class EasyDesignHelper {
      * 创建一个图片设计
      * @return
      */
-    public ImageEasyDesign createImageDesign(Bitmap bitmap){
+    public static ImageEasyDesign createImageDesign(Bitmap bitmap, ImageEasyDesignType imageEasyDesignType){
         //Bitmap mainBmp       = BitmapFactory.decodeResource(this.context.getResources(), R.mipmap.test);
         int     mainBmpWidth  = bitmap.getWidth();
         int     mainBmpHeight = bitmap.getHeight();
@@ -145,9 +143,36 @@ public class EasyDesignHelper {
                 mainBmpWidth/2,mainBmpHeight/2};
         float[]  dstPs       = srcPs.clone();
         Matrix matrix        = new Matrix();
-        return new ImageEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,bitmap);
+        return new ImageEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,bitmap,imageEasyDesignType);
     }
     //创建一个文本设计
+    public static TextEasyDesign createTextEasyDesign(String label){
+
+        Paint paint = new Paint();
+        Rect rect = new Rect();
+        paint.getTextBounds(label,0,label.length(), rect);
+
+        int     mainBmpWidth  = rect.width();
+        int     mainBmpHeight =rect.height();
+        RectF srcRect         = new RectF(0, 0, mainBmpWidth, mainBmpHeight);
+        RectF   dstRect       = new RectF();
+        float[] srcPs         = new float[]{
+                0,0,
+                mainBmpWidth/2,0,
+                mainBmpWidth,0,
+                mainBmpWidth,mainBmpHeight/2,
+                mainBmpWidth,mainBmpHeight,
+                mainBmpWidth/2,mainBmpHeight,
+                0,mainBmpHeight,
+                0,mainBmpHeight/2,
+                mainBmpWidth/2,mainBmpHeight/2};
+        float[]  dstPs       = srcPs.clone();
+        Matrix matrix        = new Matrix();
+        return new TextEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,label);
+    }
+
+
+
     //创建一个SVG设计
 
     /**
@@ -216,6 +241,26 @@ public class EasyDesignHelper {
 
         }
         return false;
+    }
+
+    /**
+     * 获取添加设计平台的中心X点
+     * @param easyDesignView
+     * @param easyDesign
+     * @return
+     */
+    public static float getAddDesignCenterX(BaseEasyDesignView easyDesignView, BaseEasyDesign easyDesign){
+        return (float)(easyDesignView.getWidth() / 2  - easyDesign.getDstRect().centerX()+ easyDesignView.getLeft());
+    }
+
+    /**
+     * 获取添加设计平台的中心Y点
+     * @param easyDesignView
+     * @param easyDesign
+     * @return
+     */
+    public static float getAddDesignCenterY(BaseEasyDesignView easyDesignView, BaseEasyDesign easyDesign){
+        return (float)(easyDesignView.getHeight() / 2  - easyDesign.getDstRect().centerY() + easyDesignView.getTop());
     }
 
 }

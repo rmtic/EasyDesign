@@ -33,6 +33,22 @@
                 android:textColor="@android:color/white"
                 android:text="恢复"/>
             <Button
+                android:id="@+id/btn_narrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/white"
+                android:text="Narrow"/>
+            <Button
+                android:id="@+id/btn_amplification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/white"
+                android:text="Amplification"/>
+            <Button
                 android:id="@+id/btn_select1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

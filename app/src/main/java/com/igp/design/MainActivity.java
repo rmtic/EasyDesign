@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
        RectF markerCopyRect    = new RectF(0, 0, draftBoxUncheck.getWidth(), draftBoxUncheck.getHeight());//旋转+放大 标记边界
 
-        /** 平台 和 控制层 的配置 */
+        /** 平台 和 控制层 的配置     */
 
         EasySpace easySpace = EasyDesignHelper.createEasySpace();
         mEasyDesignView.setEasySpace(easySpace);

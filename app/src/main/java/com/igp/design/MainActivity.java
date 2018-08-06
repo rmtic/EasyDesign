@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesignType;
+import com.igp.easydesign.bean.easydesign.svg.SvgEasyDesign;
 import com.igp.easydesign.bean.easydesign.text.TextEasyDesign;
 import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.icon.EasyIconType;
@@ -107,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
        RectF markerCopyRect    = new RectF(0, 0, draftBoxUncheck.getWidth(), draftBoxUncheck.getHeight());//旋转+放大 标记边界
 
         /** 平台 和 控制层 的配置     */
@@ -124,15 +124,21 @@ public class MainActivity extends AppCompatActivity {
        mEasyDesignView.setEasyIconList(easyIconList);                                               //给控制器设置一组图标
        mEasyDesignView.setOnEasyDesignViewListener(new OnEasyDesignViewListener() {
            @Override
-           public void onEasyDesignChange(BaseEasyDesign easyDesign, boolean isBlurEasyDesign) {
+           public void onEasyDesignChange(BaseEasyDesign easyDesign) {
                if (easyDesign instanceof ImageEasyDesign) {
                    Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicWidthDp():"  + ((ImageEasyDesign) easyDesign).getDynamicWidthDp());
                    Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicHeightDp():" + ((ImageEasyDesign) easyDesign).getDynamicHeightDp());
-                   if(isBlurEasyDesign){
-                       Log.i("print", "图片模糊无法打印");
-                   }else{
-                       Log.i("print","图片可以使用");
-                   }
+               }
+           }
+
+           @Override
+           public void onEasyDesignSelected(BaseEasyDesign easyDesign) {
+               if (easyDesign instanceof TextEasyDesign) {
+
+               }else if(easyDesign instanceof ImageEasyDesign){
+
+               }else if(easyDesign instanceof SvgEasyDesign){
+
                }
            }
        });

@@ -60,38 +60,6 @@ public class EasyDesignView extends BaseEasyDesignView {
         return this.easyControl;
     }
 
-    @Override
-    public boolean isBlurEasyDesign() {
-        if (getSelectedEasyDesign() != null && getSelectedEasyDesign() instanceof ImageEasyDesign && getEasySpace() != null) {
-            ImageEasyDesign imageEasyDesign =  ((ImageEasyDesign) getSelectedEasyDesign());
-            if(imageEasyDesign.getImageEasyDesignType() == ImageEasyDesignType.REMOTE_STICKER){
-                int                imageDynamicWidthPx   = ConvertUtils.dp2px(imageEasyDesign.getDynamicWidthDp());              //动态宽度
-                int                imageDynamicHeightPx  = ConvertUtils.dp2px(imageEasyDesign.getDynamicWidthDp());              //动态高度
-
-                int                imageOriginalWidthPx  = ConvertUtils.dp2px(imageEasyDesign.getOriginalWidthDp());             //原始宽度
-                int                imageOriginalHeightPx = ConvertUtils.dp2px(imageEasyDesign.getOriginalHeightDp());            //原始高度
-
-                int                areaDesignWidthPx   = getEasySpace().getRect().right - getEasySpace().getRect().left;         //设计区宽度
-                int                areaDesignHeightPx  = getEasySpace().getRect().right - getEasySpace().getRect().left;         //设计区宽度
-
-                int                paramsWidthCM       = getEasySpace().paramsWidthCM;                                           //paramsWidth
-                int                paramsHeightCM      = getEasySpace().paramsHeightCM;                                          //paramsHeight
-                float              sizecn              = (float)(paramsWidthCM / 0.02 / areaDesignWidthPx);                      //SizeCn
-                int                imageMaxWidthPx     = (int) (imageOriginalWidthPx * sizecn);                                  //图片最多宽度
-                int                imageMaxHeightPx    = (int) (imageOriginalHeightPx * sizecn);                                 //图片最大高度
-
-            if(imageDynamicHeightPx > imageMaxHeightPx || imageDynamicWidthPx > imageMaxWidthPx){
-                //图片模糊无法打印
-                return true;
-            }else{
-                //图片可以使用哦
-                return false;
-            }
-            }
-        }
-        return false;
-    }
-
     public EasyDesignView(Context context) {
         super(context);
         init(context);
@@ -250,15 +218,5 @@ public class EasyDesignView extends BaseEasyDesignView {
         invalidate();
     }
 
-    /*@Override
-    public void onBindEasyDesignListener(BaseEasyDesign easyDesign) {
-        //设置选中
-        if(baseEasyDesigns.contains(easyDesign)){
-            setSelectedEasyDesign(easyDesign);
-        }else{
-            notSelectAll();
-        }
-        invalidate();
-    }*/
 
 }

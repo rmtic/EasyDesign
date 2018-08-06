@@ -52,7 +52,6 @@ public abstract class BaseEasyDesignView extends View  {
     public abstract List<BaseEasyDesign> getBaseEasyDesigns();                                      //获取设计组
     public abstract void                 setEasyControl(EasyControl easyControl);                   //设置控制器
     public abstract EasyControl          getEasyControl();                                          //获取控制器
-    public abstract boolean              isBlurEasyDesign();                                        //是否为模糊设计
 
     int[] location = new int[2];
     public int drawDensity = 2;//绘制密度,数值越高图像质量越低、性能越好
@@ -105,16 +104,10 @@ public abstract class BaseEasyDesignView extends View  {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        /** 当前设计发生变化会触发onEasyDesignChange（）*/
         if (onEasyDesignViewListener != null && getSelectedEasyDesign() != null) {
-            onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(),isBlurEasyDesign());
+            onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign());
         }
-/*
-        if (getEasyControl() != null && getEasyControl().getBindEasyDesign() != null && getEasyControl().getOnChangeEasyDesignListener() != null) {
-            if (getEasyControl().getBindEasyDesign() instanceof ImageEasyDesign) {
-                getEasyControl().getOnChangeEasyDesignListener().onSizeChange(((ImageEasyDesign) getEasyControl().getBindEasyDesign()).getDynamicWidthDp(),((ImageEasyDesign) getEasyControl().getBindEasyDesign()).getDynamicHeightDp());
-            }
-        }*/
-
 
         /** 绘制控制层,绘制矩阵范围的背景 */
         if (getEasyControl() != null && getEasyControl().getBindEasyDesign() != null ) {
@@ -179,6 +172,11 @@ public abstract class BaseEasyDesignView extends View  {
                 }
                 break;
             case MotionEvent.ACTION_DOWN:
+                /** 当前设计发生变化会触发onEasyDesignChange（）*/
+                if (onEasyDesignViewListener != null) {
+                    onEasyDesignViewListener.onEasyDesignSelected(getSelectedEasyDesign());
+                }
+
                 /** 手指按下时有如下3中情况（由上至下排序 1. 控制按钮 2.设计 3.平台背景） */
                 actionDown();
                 invalidate();

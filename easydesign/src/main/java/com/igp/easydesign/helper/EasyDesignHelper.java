@@ -109,16 +109,16 @@ public class EasyDesignHelper {
 
     /**
      * 创建一个设计区
+     * createEasySpace(150,50,650,700,Color.WHITE);
      * @return
      */
-    public static EasySpace createEasySpace(){
+    public static EasySpace createEasySpace(int left,int top,int right,int bottom,int color){
         Matrix matrix = new Matrix();
         Paint  paint  = new Paint();
-        paint.setColor(Color.WHITE);
+        paint.setColor(color);
         paint.setStyle(Paint.Style.FILL);
-        Rect rect = new Rect(150,50,650,700);
-        EasySpace easySpace = new EasySpace(rect,matrix,paint);
-        return easySpace;
+        Rect rect = new Rect(left, top, right, bottom);
+        return new EasySpace(rect,matrix,paint,color);
     }
 
     /**

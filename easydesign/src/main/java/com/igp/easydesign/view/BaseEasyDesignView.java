@@ -172,11 +172,6 @@ public abstract class BaseEasyDesignView extends View  {
                 }
                 break;
             case MotionEvent.ACTION_DOWN:
-                /** 当前设计发生变化会触发onEasyDesignChange（）*/
-                if (onEasyDesignViewListener != null) {
-                    onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(),EasyEventType.SELECTED);
-                }
-
                 /** 手指按下时有如下3中情况（由上至下排序 1. 控制按钮 2.设计 3.平台背景） */
                 actionDown();
                 invalidate();
@@ -244,18 +239,22 @@ public abstract class BaseEasyDesignView extends View  {
             for (BaseEasyDesign baseEasyDesign : getBaseEasyDesigns()) {
                 if(isInEasyDesignBitmap(baseEasyDesign.matrix,baseEasyDesign.getSrcRect(),downPoint)){//如果在图片上
                     setSelectedEasyDesign(baseEasyDesign);
-                    /*if (getEasyControl() != null) {
-                        getEasyControl().bindEasyDesign(baseEasyDesign);                     //控制器设置选中设计
-                    }*/
+                    if (onEasyDesignViewListener != null) {
+                        onEasyDesignViewListener.onEasyDesignChange(baseEasyDesign,EasyEventType.SELECTED);
+                    }
                 }
             }
         }else{
             actionMode = ACTION_NONE;
             if (getEasyControl() != null) {
                 setSelectedEasyDesign(null);
-                //getEasyControl().bindEasyDesign(null);
+                if (onEasyDesignViewListener != null) {
+                    onEasyDesignViewListener.onEasyDesignChange(null,EasyEventType.SELECTED);
+                }
             }
         }
+        /** 当前设计发生变化会触发onEasyDesignChange（）*/
+
     }
 
     /**

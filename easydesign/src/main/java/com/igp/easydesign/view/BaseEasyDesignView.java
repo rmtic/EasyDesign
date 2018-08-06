@@ -106,7 +106,7 @@ public abstract class BaseEasyDesignView extends View  {
 
         /** 当前设计发生变化会触发onEasyDesignChange（）*/
         if (onEasyDesignViewListener != null && getSelectedEasyDesign() != null) {
-            onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign());
+            onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(),EasyEventType.RESIZE);
         }
 
         /** 绘制控制层,绘制矩阵范围的背景 */
@@ -174,7 +174,7 @@ public abstract class BaseEasyDesignView extends View  {
             case MotionEvent.ACTION_DOWN:
                 /** 当前设计发生变化会触发onEasyDesignChange（）*/
                 if (onEasyDesignViewListener != null) {
-                    onEasyDesignViewListener.onEasyDesignSelected(getSelectedEasyDesign());
+                    onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(),EasyEventType.SELECTED);
                 }
 
                 /** 手指按下时有如下3中情况（由上至下排序 1. 控制按钮 2.设计 3.平台背景） */

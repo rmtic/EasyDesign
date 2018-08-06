@@ -21,6 +21,7 @@ import com.igp.easydesign.bean.mask.EasyMask;
 import com.igp.easydesign.bean.space.EasySpace;
 import com.igp.easydesign.helper.EasyDesignHelper;
 import com.igp.easydesign.view.EasyDesignView;
+import com.igp.easydesign.view.EasyEventType;
 import com.igp.easydesign.view.OnEasyDesignViewListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -124,21 +125,25 @@ public class MainActivity extends AppCompatActivity {
        mEasyDesignView.setEasyIconList(easyIconList);                                               //给控制器设置一组图标
        mEasyDesignView.setOnEasyDesignViewListener(new OnEasyDesignViewListener() {
            @Override
-           public void onEasyDesignChange(BaseEasyDesign easyDesign) {
-               if (easyDesign instanceof ImageEasyDesign) {
-                   Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicWidthDp():"  + ((ImageEasyDesign) easyDesign).getDynamicWidthDp());
-                   Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicHeightDp():" + ((ImageEasyDesign) easyDesign).getDynamicHeightDp());
-               }
-           }
-
-           @Override
-           public void onEasyDesignSelected(BaseEasyDesign easyDesign) {
-               if (easyDesign instanceof TextEasyDesign) {
-
-               }else if(easyDesign instanceof ImageEasyDesign){
-
-               }else if(easyDesign instanceof SvgEasyDesign){
-
+           public void onEasyDesignChange(BaseEasyDesign easyDesign, EasyEventType easyEventType) {
+               switch (easyEventType) {
+                   case RESIZE:
+                       if (easyDesign instanceof ImageEasyDesign) {
+                           //用来判断模糊
+                           Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicWidthDp():"  + ((ImageEasyDesign) easyDesign).getDynamicWidthDp());
+                           Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicHeightDp():" + ((ImageEasyDesign) easyDesign).getDynamicHeightDp());
+                       }
+                       break;
+                   case ADD:
+                       break;
+                   case REMOVE:
+                       break;
+                   case SELECTED:
+                       break;
+                   case LOCK:
+                       break;
+                   default:
+                       break;
                }
            }
        });

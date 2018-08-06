@@ -1,6 +1,7 @@
 package com.igp.design;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -111,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
         /** 平台 和 控制层 的配置     */
 
-        EasySpace easySpace = EasyDesignHelper.createEasySpace();
+        EasySpace easySpace = EasyDesignHelper.createEasySpace(150,50,650,700, Color.WHITE);
+        easySpace.setBgColor(Color.WHITE);
         mEasyDesignView.setEasySpace(easySpace);
 
         EasyMask easyMask = EasyDesignHelper.createEasyMask(EasyDesignHelper.getLocalBitmap(MainActivity.this,R.drawable.bg_mask));

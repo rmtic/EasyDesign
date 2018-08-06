@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
         /** 平台 和 控制层 的配置     */
 
-        EasySpace easySpace = EasyDesignHelper.createEasySpace(150,50,650,700, Color.WHITE);
+        EasySpace easySpace = EasyDesignHelper.createEasySpace(150,50,650,700, Color.WHITE,10,10);
         easySpace.setBgColor(Color.WHITE);
         mEasyDesignView.setEasySpace(easySpace);
 
@@ -124,11 +124,16 @@ public class MainActivity extends AppCompatActivity {
        mEasyDesignView.setEasyIconList(easyIconList);                                               //给控制器设置一组图标
        mEasyDesignView.setOnEasyDesignViewListener(new OnEasyDesignViewListener() {
            @Override
-           public void onEasyDesignChange(BaseEasyDesign easyDesign) {
+           public void onEasyDesignChange(BaseEasyDesign easyDesign, boolean isBlurEasyDesign) {
                if (easyDesign instanceof ImageEasyDesign) {
                    Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicWidthDp():"  + ((ImageEasyDesign) easyDesign).getDynamicWidthDp());
                    Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicHeightDp():" + ((ImageEasyDesign) easyDesign).getDynamicHeightDp());
-              }
+                   if(isBlurEasyDesign){
+                       Log.i("print", "图片模糊无法打印");
+                   }else{
+                       Log.i("print","图片可以使用");
+                   }
+               }
            }
        });
 

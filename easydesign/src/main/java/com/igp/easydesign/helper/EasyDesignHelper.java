@@ -112,13 +112,13 @@ public class EasyDesignHelper {
      * createEasySpace(150,50,650,700,Color.WHITE);
      * @return
      */
-    public static EasySpace createEasySpace(int left,int top,int right,int bottom,int color){
+    public static EasySpace createEasySpace(int left,int top,int right,int bottom,int color,int paramsWidthCM,int paramsHeightCM){
         Matrix matrix = new Matrix();
         Paint  paint  = new Paint();
         paint.setColor(color);
         paint.setStyle(Paint.Style.FILL);
         Rect rect = new Rect(left, top, right, bottom);
-        return new EasySpace(rect,matrix,paint,color);
+        return new EasySpace( rect , matrix ,paint ,color , paramsWidthCM, paramsHeightCM );
     }
 
     /**

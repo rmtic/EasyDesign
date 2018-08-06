@@ -19,6 +19,10 @@ public class ImageEasyDesign extends BaseEasyDesign {
     public String localPhontoLink;
     public ImageEasyDesignType imageEasyDesignType;
 
+    //提供判断模糊的属性
+    public int originalWidthDp;
+    public int originalHeightDp;
+
 
     public ImageEasyDesign(float[] srcPs, float[] dstPs, RectF srcRect, RectF dstRect, Matrix matrix, Bitmap bitmap, ImageEasyDesignType imageEasyDesignType) {
         super(srcPs, dstPs, srcRect, dstRect, matrix);
@@ -65,6 +69,22 @@ public class ImageEasyDesign extends BaseEasyDesign {
         this.imageEasyDesignType = imageEasyDesignType;
     }
 
+    public int getOriginalWidthDp() {
+        return originalWidthDp;
+    }
+
+    public void setOriginalWidthDp(int originalWidthDp) {
+        this.originalWidthDp = originalWidthDp;
+    }
+
+    public int getOriginalHeightDp() {
+        return originalHeightDp;
+    }
+
+    public void setOriginalHeightDp(int originalHeightDp) {
+        this.originalHeightDp = originalHeightDp;
+    }
+
     /**
      * 获取图片的动态宽
      * @return
@@ -88,6 +108,7 @@ public class ImageEasyDesign extends BaseEasyDesign {
         }
         return  height;
     }
+
 
 
 }

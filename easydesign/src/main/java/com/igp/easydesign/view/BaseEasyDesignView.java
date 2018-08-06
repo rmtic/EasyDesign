@@ -41,21 +41,18 @@ public abstract class BaseEasyDesignView extends View  {
     public static final int ACTION_ROTATE           = 3;
     public static final int ACTION_SCALE_AND_ROTATE = 4;
 
-
     public ScaleGestureDetector mScaleGestureDetector = null;
-    public static float SCALE_MAX = 10.0f;
-    public static float SCALE_MIN = 0.08f;
+    public static float SCALE_MAX                   = 10.0f;
+    public static float SCALE_MIN                   = 0.08f;
     public static float SCALE_MIN_LEN;
-
     public float preX, preY;
 
-    //获取遮罩
-
-    public abstract EasyMask getEasyMask();                                                         //获取设计区
-    public abstract EasySpace getEasySpace();                                                       //获取设计区
+    public abstract EasyMask             getEasyMask();                                             //获取遮罩
+    public abstract EasySpace            getEasySpace();                                            //获取设计区
     public abstract List<BaseEasyDesign> getBaseEasyDesigns();                                      //获取设计组
-    public abstract void        setEasyControl(EasyControl easyControl);                            //设置控制器
-    public abstract EasyControl getEasyControl();                                                   //获取控制器
+    public abstract void                 setEasyControl(EasyControl easyControl);                   //设置控制器
+    public abstract EasyControl          getEasyControl();                                          //获取控制器
+    public abstract boolean              isBlurEasyDesign();                                        //是否为模糊设计
 
     int[] location = new int[2];
     public int drawDensity = 2;//绘制密度,数值越高图像质量越低、性能越好
@@ -109,12 +106,7 @@ public abstract class BaseEasyDesignView extends View  {
         super.onDraw(canvas);
 
         if (onEasyDesignViewListener != null && getSelectedEasyDesign() != null) {
-
-
-
-
-
-            onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign());
+            onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(),isBlurEasyDesign());
         }
 /*
         if (getEasyControl() != null && getEasyControl().getBindEasyDesign() != null && getEasyControl().getOnChangeEasyDesignListener() != null) {

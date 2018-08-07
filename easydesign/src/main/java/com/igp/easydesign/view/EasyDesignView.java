@@ -242,4 +242,24 @@ public class EasyDesignView extends BaseEasyDesignView {
         canvas.restore();
         return bitmap;
     }
+    /**
+     *
+     * 方法：截图
+     * 用途：截取设计区区域的图片
+     * 说明：
+     * 注意: 使用Bitmap.createDesignViewBitmap()的时候需要知道如下
+     * 1. x + (width - x )  < bitmap.getweidth();
+     * 2. y + (height - y ) < bitmap.getheight();
+     * kusdom,给出的width = right - left; height = bottom - top
+     */
+    public Bitmap createDesignBimap() {
+        int x      = getEasySpace().getRect().left;
+        int y      = getEasySpace().getRect().top;
+        int right  = getEasySpace().getRect().right;
+        int bottom = getEasySpace().getRect().bottom;
+        int height = bottom - y;
+        int width  = right  - x;
+        return Bitmap.createBitmap(createDesignViewBitmap(),x,y,width,height);
+    }
+
 }

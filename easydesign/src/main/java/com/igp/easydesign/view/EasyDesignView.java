@@ -167,9 +167,6 @@ public class EasyDesignView extends BaseEasyDesignView {
             return;
         }
         baseEasyDesigns.add(easyDesign);
-        if (this.onEasyDesignViewListener != null) {
-            this.onEasyDesignViewListener.onEasyDesignChange(easyDesign, EasyEventType.ADD);
-        }
         invalidate();
     }
 
@@ -184,10 +181,6 @@ public class EasyDesignView extends BaseEasyDesignView {
             return;
         }
         baseEasyDesigns.remove(easyDesign);
-        setSelectedEasyDesign(null);
-        if (this.onEasyDesignViewListener != null) {
-            this.onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(), EasyEventType.SELECTED);
-        }
         invalidate();
     }
 
@@ -198,9 +191,6 @@ public class EasyDesignView extends BaseEasyDesignView {
         if (getSelectedEasyDesign() != null) {
             baseEasyDesigns.remove(getSelectedEasyDesign());
             setSelectedEasyDesign(null);
-            if (this.onEasyDesignViewListener != null) {
-                this.onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(), EasyEventType.SELECTED);
-            }
         }
         invalidate();
     }
@@ -212,9 +202,6 @@ public class EasyDesignView extends BaseEasyDesignView {
         if (getSelectedEasyDesign() != null) {
             baseEasyDesigns.clear();
             setSelectedEasyDesign(null);
-            if (this.onEasyDesignViewListener != null) {
-                this.onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(), EasyEventType.SELECTED);
-            }
         }
         invalidate();
     }
@@ -226,10 +213,6 @@ public class EasyDesignView extends BaseEasyDesignView {
     public void notSelectAll(){
         for (BaseEasyDesign baseEasyDesign : baseEasyDesigns) {
             baseEasyDesign.setSelected(false);
-        }
-        setSelectedEasyDesign(null);
-        if (this.onEasyDesignViewListener != null) {
-            this.onEasyDesignViewListener.onEasyDesignChange(null, EasyEventType.SELECTED);
         }
         invalidate();
     }

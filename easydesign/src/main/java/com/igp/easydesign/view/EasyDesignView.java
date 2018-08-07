@@ -1,6 +1,11 @@
 package com.igp.easydesign.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import com.igp.easydesign.bean.easycontrol.EasyControl;
@@ -212,5 +217,29 @@ public class EasyDesignView extends BaseEasyDesignView {
         invalidate();
     }
 
-
+    /**
+     * 方法：创建DesignView的截图
+     * 用途：生成整张设计图，提供给createDesignBimap()和ImageCrop（）方法使用
+     * 说明：1. 创建新的Bitmap对象，宽和高等于DesignNowView的宽
+     *      2. Bitmap上绘制当前会员的所有设计对象（ 注意：如果想文字在最上面，图片在最下面 这种特殊要求。
+     *      可以根据设计的类型，分别进行绘制）
+     *      3. 绘制的时候应该先锁定画布，等绘制完毕后在复原；
+     *
+     */
+    public Bitmap createDesignViewBitmap(){
+        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getWidth(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.save();
+        Paint p = new Paint();
+        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        canvas.drawPaint(p);
+        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        if(null != getBaseEasyDesigns()) {
+            for (BaseEasyDesign baseEasyDesign : getBaseEasyDesigns()) {
+                baseEasyDesign.draw(canvas);
+            }
+        }
+        canvas.restore();
+        return bitmap;
+    }
 }

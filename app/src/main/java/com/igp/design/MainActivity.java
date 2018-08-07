@@ -154,13 +154,15 @@ public class MainActivity extends AppCompatActivity {
        mEasyDesignView.addEasyDesign(imageEasyDesign2);                                             //添加一个图片设计模型
 
 
+        Bitmap bitmap = EasyDesignHelper.textAsBitmap("TEXT HERE", 28);
+        mEasyDesignView.addEasyDesign(EasyDesignHelper.createImageDesign(bitmap,ImageEasyDesignType.LOCAL_ALBUM));
 
-       TextEasyDesign textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE"); //文本设计
+       TextEasyDesign textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE");  //文本设计
+       textEasyDesign.postScale(5.5f,5.5f);
        mEasyDesignView.addEasyDesign(textEasyDesign);                                               //添加文本设计
-       mEasyDesignView.setSelectedEasyDesign(textEasyDesign);                                        //选中文本设计
+       mEasyDesignView.setSelectedEasyDesign(textEasyDesign);                                       //选中文本设计
        textEasyDesign.postTranslate(300,300);
         mEasyDesignView.invalidate();
-
 
 
        /** 相关手动操作设计的实现 */
@@ -170,34 +172,4 @@ public class MainActivity extends AppCompatActivity {
        //动画旋转
        //动画放大
     }
-
-    /**
-     *方法：是否为模糊图片
-     *说明：
-     * ---------------------------------------------------------------------------------------------
-     * 比例                   = 设计区宽  （PX） / 设计区宽（CM）
-     * 图片最大印刷宽度（CM） = 图片原始宽（PX） * 0.02;
-     * 图片最大印刷高度（CM） = 图片原始高（PX） * 0.02;
-     * 如果（ 图片拖动后宽度（CM）> 图片最大印刷宽度（CM）|| 图片拖动后高度（CM） > 图片最大印刷高度（CM））
-     * 返回 True
-     * 否则 False
-     * ---------------------------------------------------------------------------------------------
-     * @param designAreaWidthPx     设计区（PX）
-     * @param designAreaWidthCm     设计区宽（CM）
-     * @param imageWidthPx          图片原始宽（PX）
-     * @param imageHeightPx         图片原始高（PX）
-     * @param easyDesignWidthPx     图片拖动后宽度（CM）
-     * @param easyDesignHeightPx    图片拖动后高度（CM）
-     * @return
-     */
-    public Boolean isBlur(int designAreaWidthPx , int designAreaWidthCm ,int imageWidthPx ,int imageHeightPx,int easyDesignWidthPx,int easyDesignHeightPx, float sizecn){
-        float scale          = designAreaWidthPx / designAreaWidthCm;
-        int maxImageWidthCm  = (int) (imageWidthPx  * 0.02 );
-        int maxImageHeightCm = (int) (imageHeightPx * 0.02 );
-        if(easyDesignWidthPx * sizecn * scale > maxImageWidthCm || easyDesignHeightPx * sizecn * scale > maxImageHeightCm){
-            return true;
-        }
-        return false;
-    }
-
 }

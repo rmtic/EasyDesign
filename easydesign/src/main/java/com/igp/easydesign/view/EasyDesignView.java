@@ -3,14 +3,8 @@ package com.igp.easydesign.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
-
-import com.blankj.utilcode.util.ConvertUtils;
 import com.igp.easydesign.bean.easycontrol.EasyControl;
-import com.igp.easydesign.bean.easycontrol.OnChangeEasyDesignListener;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
-import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
-import com.igp.easydesign.bean.easydesign.image.ImageEasyDesignType;
 import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.mask.EasyMask;
 import com.igp.easydesign.bean.space.EasySpace;

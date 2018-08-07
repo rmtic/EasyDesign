@@ -9,8 +9,12 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
@@ -24,6 +28,8 @@ import com.igp.easydesign.bean.space.EasySpace;
 import com.igp.easydesign.view.BaseEasyDesignView;
 
 import org.michaelevans.colorart.library.ColorArt;
+
+import static com.igp.easydesign.bean.easydesign.text.TextEasyDesign.getTextWidth;
 
 /**
  * Created by qiu on 2018/7/27.
@@ -152,10 +158,19 @@ public class EasyDesignHelper {
         Rect rect = new Rect();
         paint.getTextBounds(label,0,label.length(), rect);
 
-        int     mainBmpWidth  = rect.width();
-        int     mainBmpHeight =rect.height();
-        RectF srcRect         = new RectF(0, 0, mainBmpWidth, mainBmpHeight);
-        RectF   dstRect       = new RectF();
+       /* int     mainBmpWidth  = rect.width();
+        int     mainBmpHeight = rect.height();*/
+
+        TextPaint textPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+        int text_width = getTextWidth(textPaint,label);
+        Layout.Alignment alignment = Layout.Alignment.ALIGN_CENTER;//居中对齐
+        StaticLayout staticLayout = new StaticLayout(label, textPaint,text_width,alignment, 1.0f, 0.0f, false);
+
+        int     mainBmpWidth  = staticLayout.getWidth();
+        int     mainBmpHeight = staticLayout.getHeight();
+
+        RectF srcRect         = new RectF(0, 0, staticLayout.getWidth(), staticLayout.getHeight());
+        RectF dstRect         = new RectF();
         float[] srcPs         = new float[]{
                 0,0,
                 mainBmpWidth/2,0,
@@ -168,7 +183,29 @@ public class EasyDesignHelper {
                 mainBmpWidth/2,mainBmpHeight/2};
         float[]  dstPs       = srcPs.clone();
         Matrix matrix        = new Matrix();
-        return new TextEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,label);
+        TextEasyDesign textEasyDesign = new TextEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,staticLayout);
+        textEasyDesign.setContent(label);
+        return textEasyDesign;
+    }
+
+    public static Bitmap textAsBitmap(String text, float textSize) {
+        TextPaint textPaint = new TextPaint();
+
+        // textPaint.setARGB(0x31, 0x31, 0x31, 0);
+        textPaint.setColor(Color.BLACK);
+        textPaint.setAntiAlias(true);
+        textPaint.setTextSize(textSize);
+
+        StaticLayout layout = new StaticLayout(text, textPaint, 450,
+                Layout.Alignment.ALIGN_NORMAL, 1.3f, 0.0f, true);
+        Bitmap bitmap = Bitmap.createBitmap(layout.getWidth() + 20,
+                layout.getHeight() + 20, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.translate(10, 10);
+        // canvas.drawColor(Color.GRAY);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//绘制透明色
+        layout.draw(canvas);
+        return bitmap;
     }
 
 

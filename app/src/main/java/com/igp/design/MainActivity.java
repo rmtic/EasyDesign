@@ -154,9 +154,6 @@ public class MainActivity extends AppCompatActivity {
        mEasyDesignView.addEasyDesign(imageEasyDesign2);                                             //添加一个图片设计模型
 
 
-        Bitmap bitmap = EasyDesignHelper.textAsBitmap("TEXT HERE", 28);
-        mEasyDesignView.addEasyDesign(EasyDesignHelper.createImageDesign(bitmap,ImageEasyDesignType.LOCAL_ALBUM));
-
        TextEasyDesign textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE");  //文本设计
        textEasyDesign.postScale(5.5f,5.5f);
        mEasyDesignView.addEasyDesign(textEasyDesign);                                               //添加文本设计

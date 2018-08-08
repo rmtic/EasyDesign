@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -120,15 +121,63 @@ public class TextEasyDesign extends BaseEasyDesign {
     @Override
     public void draw(@NonNull Canvas canvas) {
         //绘制文本
-        canvas.setDrawFilter(new PaintFlagsDrawFilter(0,Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG));
+       /*
         canvas.save();
         canvas.concat(matrix);//合并多个,矩阵
         if(null != staticLayout){
             staticLayout.draw(canvas);
         }
+        canvas.restore();*/
+        canvas.setDrawFilter(new PaintFlagsDrawFilter(0,Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG));
+        canvas.save();
+        paint.setAntiAlias(true);
+
+        long width  = Math.round(Math.sqrt(Math.pow(dstPs[0] - dstPs[4],2)+ Math.pow(dstPs[1] - dstPs[5],2)));
+        long height = Math.round(Math.sqrt(Math.pow(dstPs[4] - dstPs[8],2)+ Math.pow(dstPs[5] - dstPs[9],2)));
+
+        setTextSizeForWidth(paint,width,content);
+        float degree = EasyDesignHelper.computeDegree(new Point((int)dstPs[2], (int)dstPs[3]),new Point((int)dstPs[16], (int)dstPs[17]));//点与点的垂直夹角
+        canvas.rotate(degree,dstPs[12],dstPs[13]);
+
+        Rect bounds = new Rect();
+        paint.getTextBounds(content, 0, content.length(), bounds);
+        canvas.drawText(content,dstPs[12],dstPs[13] -( height / 2 - bounds.height() / 2),paint);
         canvas.restore();
+
     }
 
+    /**
+     * 获取设计宽度内字体的大小
+     * Sets the text size for a Paint object so a given string of text will be a
+     * given width.
+     *
+     * @param paint
+     *            the Paint to set the text size for
+     * @param desiredWidth
+     *            the desired width
+     * @param text
+     *            the text that should be that width
+     */
+    private static void setTextSizeForWidth(Paint paint, float desiredWidth,
+                                            String text) {
+
+        // Pick a reasonably large value for the test. Larger values produce
+        // more accurate results, but may cause problems with hardware
+        // acceleration. But there are workarounds for that, too; refer to
+        // http://stackoverflow.com/questions/6253528/font-size-too-large-to-fit-in-cache
+        final float testTextSize = 148f;
+
+        // Get the bounds of the text, using our testTextSize.
+        paint.setTextSize(testTextSize);
+        Rect bounds = new Rect();
+        paint.getTextBounds(text, 0, text.length(), bounds);
+
+        // Calculate the desired size as a proportion of our testTextSize.
+        float desiredTextSize = testTextSize * desiredWidth / bounds.width();
+
+        // Set the paint for that size.
+        paint.setTextSize(desiredTextSize);
+    }
     /**
      * 设置视图的克隆的文本大小
      * Sets the text size of a clone of the view's {@link TextPaint} object

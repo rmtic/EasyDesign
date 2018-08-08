@@ -39,7 +39,7 @@ public class TextEasyDesign extends BaseEasyDesign {
     public String rbg;
     public String fontFamily;
 
-    private TextPaint textPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+    //private TextPaint textPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
     private StaticLayout staticLayout; //可以换行的换行的布局
 
     private Layout.Alignment alignment;//对齐
@@ -62,7 +62,8 @@ public class TextEasyDesign extends BaseEasyDesign {
 
     public void setTextSize(float textSize) {
         this.textSize = textSize;
-        textPaint.setTextSize(textSize);
+        paint.setTextSize(textSize);
+        //textPaint.setTextSize(textSize);
     }
 
     public String getViewBox() {
@@ -96,7 +97,7 @@ public class TextEasyDesign extends BaseEasyDesign {
     }
 
     public int getKTextDesignWidth(){
-        return getTextWidth(textPaint,content);
+        return getTextWidth(paint,content);
     }
 
 
@@ -109,12 +110,12 @@ public class TextEasyDesign extends BaseEasyDesign {
             this.drawable = ContextCompat.getDrawable(context, R.drawable.sticker_transparent_background);
         }*/
         //创建文字
-        textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);
-        textPaint.setColor(Color.BLACK);
-        textPaint.setStyle(Paint.Style.FILL);
-        textPaint.setAntiAlias(true);
+        paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);
+        paint.setColor(Color.BLACK);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setAntiAlias(true);
         alignment = Layout.Alignment.ALIGN_CENTER;//居中对齐
-        textPaint.setTextSize(textSize);//设置字体大小
+        paint.setTextSize(textSize);//设置字体大小
         update();
     }
 
@@ -165,7 +166,7 @@ public class TextEasyDesign extends BaseEasyDesign {
         // more accurate results, but may cause problems with hardware
         // acceleration. But there are workarounds for that, too; refer to
         // http://stackoverflow.com/questions/6253528/font-size-too-large-to-fit-in-cache
-        final float testTextSize = 148f;
+        final float testTextSize = 24f;
 
         // Get the bounds of the text, using our testTextSize.
         paint.setTextSize(testTextSize);
@@ -187,7 +188,7 @@ public class TextEasyDesign extends BaseEasyDesign {
      * with the specified width
      * and when the text has the specified size.
      */
-    protected int getTextHeightPixels(@NonNull CharSequence source, int availableWidthPixels, float textSizePixels) {
+    /*protected int getTextHeightPixels(@NonNull CharSequence source, int availableWidthPixels, float textSizePixels) {
         textPaint.setTextSize(textSizePixels);
         StaticLayout staticLayout = new StaticLayout(
                 source,
@@ -198,7 +199,7 @@ public class TextEasyDesign extends BaseEasyDesign {
                 lineSpacingExtra,
                 true);
         return staticLayout.getHeight();
-    }
+    }*/
 
 
 
@@ -250,7 +251,7 @@ public class TextEasyDesign extends BaseEasyDesign {
      * @return
      */
     public TextEasyDesign setTextColor(@ColorInt int color) {
-        textPaint.setColor(color);
+        paint.setColor(color);
         this.textColor = color;
         return this;
     }
@@ -269,16 +270,16 @@ public class TextEasyDesign extends BaseEasyDesign {
      * @return
      */
     public TextEasyDesign setTypeface(@Nullable Typeface typeface) {
-        textPaint.setTypeface(typeface);
-        int text_width = getTextWidth(textPaint,content);
+        paint.setTypeface(typeface);
+        /*int text_width = getTextWidth(paint,content);
         //rectF = new RectF(0, 0,drawable.getIntrinsicWidth(),staticLayout.getHeight());//矩形
         if( text_width < intrinsicWidth){
-            staticLayout = new StaticLayout(content, textPaint,text_width,alignment, 1.0f, 0.0f, false);
+            staticLayout = new StaticLayout(content, paint,text_width,alignment, 1.0f, 0.0f, false);
             srcRect = new RectF(0, 0,text_width,staticLayout.getHeight());//矩形
         }else{
-            staticLayout = new StaticLayout(content, textPaint,intrinsicWidth,alignment, 1.0f, 0.0f, false);
+            staticLayout = new StaticLayout(content, paint,intrinsicWidth,alignment, 1.0f, 0.0f, false);
             srcRect = new RectF(0, 0,intrinsicWidth,staticLayout.getHeight());//矩形
-        }
+        }*/
         return this;
     }
 }

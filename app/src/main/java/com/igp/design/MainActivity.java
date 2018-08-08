@@ -154,8 +154,9 @@ public class MainActivity extends AppCompatActivity {
        mEasyDesignView.addEasyDesign(imageEasyDesign2);                                             //添加一个图片设计模型
 
 
-       TextEasyDesign textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE");  //文本设计
+       TextEasyDesign textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE 12312");  //文本设计
        textEasyDesign.postScale(5.5f,5.5f);
+       textEasyDesign.setTextColor(Color.RED);
        mEasyDesignView.addEasyDesign(textEasyDesign);                                               //添加文本设计
        mEasyDesignView.setSelectedEasyDesign(textEasyDesign);                                       //选中文本设计
        textEasyDesign.postTranslate(300,300);

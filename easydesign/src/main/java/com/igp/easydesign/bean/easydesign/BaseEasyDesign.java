@@ -3,20 +3,44 @@ package com.igp.easydesign.bean.easydesign;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
+
+import com.igp.easydesign.helper.EasyDesignHelper;
 
 
 /**
  * Created by qiu on 2018/7/27.
+ * BaseEasyDesign 设计的基类
+ * 概览
+ * *************************************************************************************************
+ * 属性：
+ *      1.是否锁定
+ *      2.是否选中
+ *      3.画笔
+ *      4.源点数组，运算结果数组
+ *      5.源矩型  ，运算结果矩型
+ *      6.矩阵
+ * 操作：
+ *      1.移动
+ *      2.旋转
+ *      3.旋转（某点）
+ *      4.放大
+ *      5.更新
+ * 获取：
+ *      1.宽
+ *      2.高
+ *      3.旋转角度
+ * *************************************************************************************************
  */
 
 public abstract class BaseEasyDesign  {
 
-    public Paint paint = new Paint();
     public boolean isLocked   = false;
     public boolean isSelected = false;
 
+    public Paint paint = new Paint();
     public float[] srcPs  , dstPs;
     public RectF   srcRect,dstRect;
     public Matrix  matrix;
@@ -100,6 +124,14 @@ public abstract class BaseEasyDesign  {
      */
     public abstract void draw(@NonNull Canvas canvas);
 
+    /***
+     * 1.移动
+     * 2.旋转
+     * 3.旋转（某点）
+     * 4.放大
+     * 5.更新
+     * *********************************************************************************************
+     */
 
     /**
      * 递增移动设计
@@ -113,7 +145,6 @@ public abstract class BaseEasyDesign  {
         matrix.postTranslate(dx,dy);
         update();
     }
-
 
     /**
      * 递增旋转设计
@@ -169,7 +200,48 @@ public abstract class BaseEasyDesign  {
         matrix.mapRect(dstRect, srcRect);
     }
 
+    /***
+     * 1.宽
+     * 2.高
+     * 3.旋转角度
+     * *********************************************************************************************
+     */
 
+    /**
+     * EasyDesign Dst动态宽度
+     * @return
+     */
+    public int getDstPsWidthDp() {
+        int width = 0;
+        if (dstPs != null && dstPs.length > 0) {
+            width  = (int) Math.round(Math.sqrt(Math.pow(dstPs[0] - dstPs[4],2)+ Math.pow(dstPs[1] - dstPs[5],2)));
+        }
+        return (int) width;
+    }
+
+    /**
+     * EasyDesign Dst动态高度
+     * @return
+     */
+    public int getDstPsHeightDp() {
+        int height = 0;
+        if (dstPs != null && dstPs.length > 0) {
+            height = (int) Math.round(Math.sqrt(Math.pow(dstPs[4] - dstPs[8],2)+ Math.pow(dstPs[5] - dstPs[9],2)));
+        }
+        return  height;
+    }
+
+    /**
+     * EasyDesign 的旋转角度
+     * @return
+     */
+    public float getDegree(){
+        float degree = 0;
+        if (dstPs != null && dstPs.length > 0) {
+            degree = (float) Math.floor(EasyDesignHelper.computeDegree(new Point((int)dstPs[2], (int)dstPs[3]),new Point((int)dstPs[16], (int)dstPs[17])));
+        }
+        return degree;
+    }
 
 
 }

@@ -23,7 +23,7 @@ import java.util.List;
 
 public class EasyControl extends BaseEasyControl {
 
-    //private OnChangeEasyDesignListener onChangeEasyDesignListener;
+
     private BaseEasyDesign easyDesign;
     private float []       srcPs   ,dstPs;
     public RectF           srcRect ,dstRect;
@@ -162,7 +162,7 @@ public class EasyControl extends BaseEasyControl {
         paintTip.setColor(Color.WHITE);
 
         float degree = (float) Math.floor(EasyDesignHelper.computeDegree(new Point((int)dstPs[2], (int)dstPs[3]),new Point((int)dstPs[16], (int)dstPs[17])));//点与点的垂直夹角
-        canvas.drawText(String.format("[ degree = %s 度][W:%sdp,H%sdp] [%s px,%s px]",degree,width,height, ConvertUtils.dp2px(width),ConvertUtils.dp2px(height)),dstRect.left,dstRect.top - tipBoxTopDistance - tipBoxHeight / 4 ,paintTip);
+        canvas.drawText(String.format("[ degree = %s °][W:%sdp,H%sdp] [%s px,%s px]",degree,width,height, ConvertUtils.dp2px(width),ConvertUtils.dp2px(height)),dstRect.left,dstRect.top - tipBoxTopDistance - tipBoxHeight / 4 ,paintTip);
     }
 
 
@@ -273,19 +273,6 @@ public class EasyControl extends BaseEasyControl {
             canvas.drawLine(cropBounds.left, y, cropBounds.right, y, paint);
         }
     }
-
-    /**设置绑定设计监听*/
-    /*public void setOnChangeEasyDesignListener(OnChangeEasyDesignListener onChangeEasyDesignListener) {
-        this.onChangeEasyDesignListener = onChangeEasyDesignListener;
-    }*/
-
-    /**
-     * 获取事件
-     * @return
-     */
-    /*public OnChangeEasyDesignListener getOnChangeEasyDesignListener(){
-        return this.onChangeEasyDesignListener;
-    }*/
 
     /**获取警告图标*/
     public Bitmap getBitmapWarning() {

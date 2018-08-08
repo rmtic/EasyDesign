@@ -30,7 +30,18 @@ import java.util.List;
 
 public abstract class BaseEasyDesignView extends View  {
 
+    private boolean enableDrawDstRectBg        = true;                                              //是否允许绘制背景
+    private boolean enableDrawEasySpace        = true;                                              //是否允许绘制设计区
+    private boolean enableDrawEasyMask         = true;                                              //是否允许绘制遮罩
+    private boolean enableDrawDstPsLine        = true;                                              //是否绘制小矩形边框
+    private boolean enableDrawDstRectLine      = true;                                              //是否绘制矩阵范围的框
+    private boolean enableDrawGridLine         = true;                                              //是否绘制矩阵范围的网格
+    private boolean enableDrawDstpsPoint       = true;                                              //是否绘制矩阵点
+    private boolean enableDrawLeetToptips      = true;                                              //是否绘制提示文字
+    private boolean enableDrawEasyIcons        = true;                                              //是否绘制控制图标
+
     public OnEasyDesignViewListener onEasyDesignViewListener;
+
 
     //TODO 待开发 设计平台基本信息
     //会员手势操作行为 [ 无 , 拖拽 , 缩放 , 旋转 ]
@@ -46,6 +57,7 @@ public abstract class BaseEasyDesignView extends View  {
     public static float SCALE_MIN                   = 0.08f;
     public static float SCALE_MIN_LEN;
     public float preX, preY;
+
 
     public abstract EasyMask             getEasyMask();                                             //获取遮罩
     public abstract EasySpace            getEasySpace();                                            //获取设计区
@@ -111,11 +123,11 @@ public abstract class BaseEasyDesignView extends View  {
 
         /** 绘制控制层,绘制矩阵范围的背景 */
         if (getEasyControl() != null && getEasyControl().getBindEasyDesign() != null ) {
-            getEasyControl() .drawDstRectBg(canvas);
+            if(enableDrawDstRectBg)  {getEasyControl() .drawDstRectBg(canvas);    }
         }
         /**绘制设计区域*/
         if (getEasySpace() != null) {
-            getEasySpace().draw(canvas);
+            if(enableDrawEasySpace)  {getEasySpace().draw(canvas);    }
         }
 
         /** 绘制绘制所有设计 */
@@ -125,7 +137,7 @@ public abstract class BaseEasyDesignView extends View  {
         }
         /** 绘制遮罩蒙版 */
         if (getEasyMask() != null) {
-            getEasyMask().draw(canvas);
+            if(enableDrawEasyMask)  {getEasyMask().draw(canvas);    }
         }
 
         /** 绘制半透明所有设计 */
@@ -138,12 +150,12 @@ public abstract class BaseEasyDesignView extends View  {
 
         /** 绘制控制层 */
         if (getEasyControl() != null && getEasyControl().getBindEasyDesign() != null ){
-            getEasyControl().drawDstPsLine(canvas);
-            getEasyControl().drawDstRectLine(canvas);                                               //绘制矩阵范围的框
-            getEasyControl().drawGridLine(canvas);                                                  //绘制矩阵范围的网格
-            getEasyControl().drawDstPsPoint(canvas);                                                //绘制矩阵范围的框
-            getEasyControl().drawLeftTopTips(canvas);                                               //绘制提示文字
-            getEasyControl().drawEasyIcons(canvas);                                                 //绘制控制图标
+            if(enableDrawDstPsLine)  {getEasyControl().drawDstPsLine(canvas);    }
+            if(enableDrawDstRectLine){getEasyControl().drawDstRectLine(canvas);  }                  //绘制矩阵范围的框
+            if(enableDrawGridLine)   {getEasyControl().drawGridLine(canvas);     }                  //绘制矩阵范围的网格
+            if(enableDrawDstpsPoint) {getEasyControl().drawDstPsPoint(canvas);   }                  //绘制矩阵范围的框
+            if(enableDrawLeetToptips){getEasyControl().drawLeftTopTips(canvas);  }                  //绘制提示文字
+            if(enableDrawEasyIcons)  {getEasyControl().drawEasyIcons(canvas);    }                  //绘制控制图标
         }
     }
 
@@ -493,5 +505,77 @@ public abstract class BaseEasyDesignView extends View  {
 
     public void setOnEasyDesignViewListener(OnEasyDesignViewListener onEasyDesignViewListener) {
         this.onEasyDesignViewListener = onEasyDesignViewListener;
+    }
+
+    public boolean isEnableDrawDstRectBg() {
+        return enableDrawDstRectBg;
+    }
+
+    public void setEnableDrawDstRectBg(boolean enableDrawDstRectBg) {
+        this.enableDrawDstRectBg = enableDrawDstRectBg;
+    }
+
+    public boolean isEnableDrawEasySpace() {
+        return enableDrawEasySpace;
+    }
+
+    public void setEnableDrawEasySpace(boolean enableDrawEasySpace) {
+        this.enableDrawEasySpace = enableDrawEasySpace;
+    }
+
+    public boolean isEnableDrawEasyMask() {
+        return enableDrawEasyMask;
+    }
+
+    public void setEnableDrawEasyMask(boolean enableDrawEasyMask) {
+        this.enableDrawEasyMask = enableDrawEasyMask;
+    }
+
+    public boolean isEnableDrawDstPsLine() {
+        return enableDrawDstPsLine;
+    }
+
+    public void setEnableDrawDstPsLine(boolean enableDrawDstPsLine) {
+        this.enableDrawDstPsLine = enableDrawDstPsLine;
+    }
+
+    public boolean isEnableDrawDstRectLine() {
+        return enableDrawDstRectLine;
+    }
+
+    public void setEnableDrawDstRectLine(boolean enableDrawDstRectLine) {
+        this.enableDrawDstRectLine = enableDrawDstRectLine;
+    }
+
+    public boolean isEnableDrawGridLine() {
+        return enableDrawGridLine;
+    }
+
+    public void setEnableDrawGridLine(boolean enableDrawGridLine) {
+        this.enableDrawGridLine = enableDrawGridLine;
+    }
+
+    public boolean isEnableDrawDstpsPoint() {
+        return enableDrawDstpsPoint;
+    }
+
+    public void setEnableDrawDstpsPoint(boolean enableDrawDstpsPoint) {
+        this.enableDrawDstpsPoint = enableDrawDstpsPoint;
+    }
+
+    public boolean isEnableDrawLeetToptips() {
+        return enableDrawLeetToptips;
+    }
+
+    public void setEnableDrawLeetToptips(boolean enableDrawLeetToptips) {
+        this.enableDrawLeetToptips = enableDrawLeetToptips;
+    }
+
+    public boolean isEnableDrawEasyIcons() {
+        return enableDrawEasyIcons;
+    }
+
+    public void setEnableDrawEasyIcons(boolean enableDrawEasyIcons) {
+        this.enableDrawEasyIcons = enableDrawEasyIcons;
     }
 }

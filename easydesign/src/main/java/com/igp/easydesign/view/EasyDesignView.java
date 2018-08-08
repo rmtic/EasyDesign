@@ -121,7 +121,6 @@ public class EasyDesignView extends BaseEasyDesignView {
         if (onEasyDesignViewListener != null) {
             onEasyDesignViewListener.onEasyDesignChange(easyDesign,EasyEventType.SELECTED);
         }
-
         invalidate();
     }
 

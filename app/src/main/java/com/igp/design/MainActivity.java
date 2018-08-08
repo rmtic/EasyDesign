@@ -103,6 +103,16 @@ public class MainActivity extends AppCompatActivity {
 
        mEasyDesignView   = findViewById(R.id.easydesignview);
 
+        mEasyDesignView.setEnableDrawDstRectBg  (true);                                             //是否允许绘制背景
+        mEasyDesignView.setEnableDrawEasySpace  (true);                                             //是否允许绘制设计区
+        mEasyDesignView.setEnableDrawEasyMask   (true);                                             //是否允许绘制遮罩
+        mEasyDesignView.setEnableDrawDstPsLine  (true);                                             //是否绘制小矩形边框
+        mEasyDesignView.setEnableDrawDstRectLine(true);                                             //是否绘制矩阵范围的框
+        mEasyDesignView.setEnableDrawGridLine   (true);                                             //是否绘制矩阵范围的网格
+        mEasyDesignView.setEnableDrawDstpsPoint (true);                                             //是否绘制矩阵点
+        mEasyDesignView.setEnableDrawLeetToptips(true);                                             //是否绘制提示文字
+        mEasyDesignView.setEnableDrawEasyIcons  (true);                                             //是否绘制控制图标
+
 
 
        /**创建相关图片*/
@@ -136,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
                    case RESIZE:
                        if (easyDesign instanceof ImageEasyDesign) {
                            //用来判断模糊
-                           Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicWidthDp():"  + ((ImageEasyDesign) easyDesign).getDynamicWidthDp());
-                           Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicHeightDp():" + ((ImageEasyDesign) easyDesign).getDynamicHeightDp());
+                           Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicWidthDp():"  + ((ImageEasyDesign) easyDesign).getDstPsWidthDp());
+                           Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicHeightDp():" + ((ImageEasyDesign) easyDesign).getDstPsHeightDp());
                        }
                        break;
                    case ADD:

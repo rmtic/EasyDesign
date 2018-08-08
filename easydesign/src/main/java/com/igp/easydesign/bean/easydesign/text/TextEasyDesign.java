@@ -1,12 +1,9 @@
 package com.igp.easydesign.bean.easydesign.text;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -14,52 +11,38 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
-
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
-import com.igp.easydesign.helper.EasyDesignHelper;
 
 /**
  * Created by qiu on 2018/7/27.
+ * ImageEasyDesign 图片设计
+ * 概览
+ * *************************************************************************************************
+ * 属性：
+ *
+ * 方法：
+ *      01.设置字体类型（）
+ *      02.设置文字内容（）
+ * *************************************************************************************************
  */
-
-
-/**
- * 开 发 者： qiu
- * 创建时间： 2017/7/5
- * 功能描述：
- */
-
 public class TextEasyDesign extends BaseEasyDesign {
 
-
-    //上下文
-    private int intrinsicWidth = 200;
-
     public String rbg;
+    public int textColor;
     public String fontFamily;
-
-    //private TextPaint textPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
-    //private StaticLayout staticLayout; //可以换行的换行的布局
-
-    private Layout.Alignment alignment;//对齐
     public String content = "";//显示内容
-
-    //最大最小字体尺寸，行距和填充；
-    private float maxTextSizePixels;
-    private float minTextSizePixels;
-    private float lineSpacingMultiplier = 1.0f;
-    private float lineSpacingExtra = 0.0f;
-
-
-    //网页需要通过这个控制文本的大小（0 0 200 400）原图的尺寸，而Text的尺寸
-    private String viewBox;
-
+    private Layout.Alignment alignment;//对齐
+    private String viewBox;//网页需要通过这个控制文本的大小（0 0 200 400）原图的尺寸，而Text的尺寸
     private float minTextSize = 24;
     private float textSize = minTextSize;
 
-    int textColor;
+    //上下文
+    //private int intrinsicWidth = 200;
+    //最大最小字体尺寸，行距和填充；
+  /*  private float maxTextSizePixels;
+    private float minTextSizePixels;
+    private float lineSpacingMultiplier = 1.0f;
+    private float lineSpacingExtra = 0.0f;*/
 
     public void setTextSize(float textSize) {
         this.textSize = textSize;
@@ -74,7 +57,6 @@ public class TextEasyDesign extends BaseEasyDesign {
     public void setViewBox(String viewBox) {
         this.viewBox = viewBox;
     }
-
 
     public String getContent() {
         return content;
@@ -110,7 +92,6 @@ public class TextEasyDesign extends BaseEasyDesign {
     public int getKTextDesignWidth(){
         return getTextWidth(paint,content);
     }
-
 
     public TextEasyDesign(float[] srcPs, float[] dstPs, RectF srcRect, RectF dstRect, Matrix matrix) {
         super(srcPs, dstPs, srcRect, dstRect, matrix);
@@ -159,31 +140,13 @@ public class TextEasyDesign extends BaseEasyDesign {
      * @param text
      *            the text that should be that width
      */
-    private static void setTextSizeForWidth(Paint paint, float desiredWidth,
-                                            String text) {
-
-        // Pick a reasonably large value for the test. Larger values produce
-        // more accurate results, but may cause problems with hardware
-        // acceleration. But there are workarounds for that, too; refer to
-        // http://stackoverflow.com/questions/6253528/font-size-too-large-to-fit-in-cache
+    private static void setTextSizeForWidth(Paint paint, float desiredWidth,String text) {
         final float testTextSize = 24f;
-
-        // Get the bounds of the text, using our testTextSize.
         paint.setTextSize(testTextSize);
         Rect bounds = new Rect();
         paint.getTextBounds(text, 0, text.length(), bounds);
-
-
-        // Calculate the desired size as a proportion of our testTextSize.
         float desiredTextSize = testTextSize * desiredWidth / bounds.width();
-
-        // Set the paint for that size.
         paint.setTextSize(desiredTextSize);
-    }
-
-
-    public float getTextSize(){
-        return paint.getTextSize();
     }
 
     /**
@@ -205,6 +168,9 @@ public class TextEasyDesign extends BaseEasyDesign {
         return iRet;
     }
 
+    public float getTextSize(){
+        return paint.getTextSize();
+    }
 
     public String getRbg() {
         return rbg;
@@ -222,9 +188,9 @@ public class TextEasyDesign extends BaseEasyDesign {
         this.fontFamily = fontFamily;
     }
 
-
     /**
-     * 修改
+     * 1. 设置字体颜色
+     * 2. 设置字体类型
      * #############################################################################################
      */
 

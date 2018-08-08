@@ -5,23 +5,49 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
-
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 
 /**
  * Created by qiu on 2018/7/27.
+ * ImageEasyDesign 图片设计
+ * 概览
+ * *************************************************************************************************
+ * 属性：
+ *      1.图片 - 类型
+ *      1.图片 - 原始宽度
+ *      2.图片 - 原始高度
+ *      3.图片 - 线上地址
+ *      4.图片 - 手机本地
+ *      5.图片 - Bitmap
+ *      6.图片 - 是否模糊
+ *
+ * 方法：
+ *      01.绘制 - 图片    （）
+ *      02.设置 - 图片类型（）
+ *      03.获取 - 图片类型（）
+ *      04.设置 - 原始宽度（）
+ *      05.获取 - 原始宽度（）
+ *      06.设置 - 原始高度（）
+ *      07.获取 - 原始高度（）
+ *      08.设置 - 线上地址（）
+ *      09.获取 - 线上地址（）
+ *      10.设置 - 手机本地（）
+ *      11.获取 - 手机本地（）
+ *      12.设置 - Bitmap  （）
+ *      13.获取 - Bitmap  （）
+ *      14.设置 - 是否模糊（）
+ *      15.获取 - 是否模糊（）
+ * *************************************************************************************************
  */
-
 public class ImageEasyDesign extends BaseEasyDesign {
 
-    public Bitmap bitmap;
-    public String remotePhotoLink;
-    public String localPhontoLink;
     public ImageEasyDesignType imageEasyDesignType;
-
-    //提供判断模糊的属性
-    public int originalWidthDp;
-    public int originalHeightDp;
+    public int                 originalWidthDp    ;
+    public int                 originalHeightDp   ;
+    public String              remotePhotoLink    ;
+    public String              localPhontoPath    ;
+    public Bitmap              bitmap             ;
+    public boolean             isBulr      = false;
 
 
     public ImageEasyDesign(float[] srcPs, float[] dstPs, RectF srcRect, RectF dstRect, Matrix matrix, Bitmap bitmap, ImageEasyDesignType imageEasyDesignType) {
@@ -35,30 +61,6 @@ public class ImageEasyDesign extends BaseEasyDesign {
         if (bitmap != null) {
             canvas.drawBitmap(bitmap, matrix, paint);
         }
-    }
-
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
-
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
-    }
-
-    public String getRemotePhotoLink() {
-        return remotePhotoLink;
-    }
-
-    public void setRemotePhotoLink(String remotePhotoLink) {
-        this.remotePhotoLink = remotePhotoLink;
-    }
-
-    public String getLocalPhontoLink() {
-        return localPhontoLink;
-    }
-
-    public void setLocalPhontoLink(String localPhontoLink) {
-        this.localPhontoLink = localPhontoLink;
     }
 
     public ImageEasyDesignType getImageEasyDesignType() {
@@ -85,30 +87,36 @@ public class ImageEasyDesign extends BaseEasyDesign {
         this.originalHeightDp = originalHeightDp;
     }
 
-    /**
-     * 获取图片的动态宽
-     * @return
-     */
-    public int getDynamicWidthDp() {
-        int width = 0;
-        if (dstPs != null && dstPs.length > 0) {
-            width  = (int) Math.round(Math.sqrt(Math.pow(dstPs[0] - dstPs[4],2)+ Math.pow(dstPs[1] - dstPs[5],2)));
-        }
-        return (int) width;
+    public String getRemotePhotoLink() {
+        return remotePhotoLink;
     }
 
-    /**
-     * 获取图片的动态高
-     * @return
-     */
-    public int getDynamicHeightDp() {
-        int height = 0;
-        if (dstPs != null && dstPs.length > 0) {
-        height = (int) Math.round(Math.sqrt(Math.pow(dstPs[4] - dstPs[8],2)+ Math.pow(dstPs[5] - dstPs[9],2)));
-        }
-        return  height;
+    public void setRemotePhotoLink(String remotePhotoLink) {
+        this.remotePhotoLink = remotePhotoLink;
     }
 
+    public String getLocalPhontoPath() {
+        return localPhontoPath;
+    }
 
+    public void setLocalPhontoPath(String localPhontoPath) {
+        this.localPhontoPath = localPhontoPath;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
+    public boolean isBulr() {
+        return isBulr;
+    }
+
+    public void setBulr(boolean bulr) {
+        isBulr = bulr;
+    }
 
 }

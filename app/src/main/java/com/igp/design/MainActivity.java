@@ -165,6 +165,16 @@ public class MainActivity extends AppCompatActivity {
         mEasyDesignView.invalidate();
 
 
+
+
+        mEasyDesignView.setOnEasyDesignViewListener(new OnEasyDesignViewListener() {
+            @Override
+            public void onEasyDesignChange(BaseEasyDesign easyDesign, EasyEventType easyEventType) {
+                Log.i("print", "easyEventType:" + easyEventType.name());
+            }
+        });
+
+
        /** 相关手动操作设计的实现 */
        //mEasyDesignView.setSelectedEasyDesign(imageEasyDesign2);                                   //手动操作【选中】
        //imageEasyDesign2.postTranslate(300,500);                                                   //手动操作【移动】

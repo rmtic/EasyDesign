@@ -167,6 +167,10 @@ public class EasyDesignView extends BaseEasyDesignView {
             return;
         }
         baseEasyDesigns.add(easyDesign);
+        setSelectedEasyDesign(easyDesign);
+        if (onEasyDesignViewListener != null) {
+            onEasyDesignViewListener.onEasyDesignChange(easyDesign,EasyEventType.SELECTED);
+        }
         invalidate();
     }
 
@@ -181,6 +185,9 @@ public class EasyDesignView extends BaseEasyDesignView {
             return;
         }
         baseEasyDesigns.remove(easyDesign);
+        if (onEasyDesignViewListener != null) {
+            onEasyDesignViewListener.onEasyDesignChange(null,EasyEventType.SELECTED);
+        }
         invalidate();
     }
 
@@ -191,6 +198,9 @@ public class EasyDesignView extends BaseEasyDesignView {
         if (getSelectedEasyDesign() != null) {
             baseEasyDesigns.remove(getSelectedEasyDesign());
             setSelectedEasyDesign(null);
+            if (onEasyDesignViewListener != null) {
+                onEasyDesignViewListener.onEasyDesignChange(null,EasyEventType.SELECTED);
+            }
         }
         invalidate();
     }
@@ -202,6 +212,9 @@ public class EasyDesignView extends BaseEasyDesignView {
         if (getSelectedEasyDesign() != null) {
             baseEasyDesigns.clear();
             setSelectedEasyDesign(null);
+            if (onEasyDesignViewListener != null) {
+                onEasyDesignViewListener.onEasyDesignChange(null,EasyEventType.SELECTED);
+            }
         }
         invalidate();
     }
@@ -213,6 +226,9 @@ public class EasyDesignView extends BaseEasyDesignView {
     public void notSelectAll(){
         for (BaseEasyDesign baseEasyDesign : baseEasyDesigns) {
             baseEasyDesign.setSelected(false);
+        }
+        if (onEasyDesignViewListener != null) {
+            onEasyDesignViewListener.onEasyDesignChange(null,EasyEventType.SELECTED);
         }
         invalidate();
     }

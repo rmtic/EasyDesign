@@ -161,7 +161,7 @@ public class EasyControl extends BaseEasyControl {
         paintTip.setTextSize(18);
         paintTip.setColor(Color.WHITE);
 
-        float degree = EasyDesignHelper.computeDegree(new Point((int)dstPs[2], (int)dstPs[3]),new Point((int)dstPs[16], (int)dstPs[17]));//点与点的垂直夹角
+        float degree = (float) Math.floor(EasyDesignHelper.computeDegree(new Point((int)dstPs[2], (int)dstPs[3]),new Point((int)dstPs[16], (int)dstPs[17])));//点与点的垂直夹角
         canvas.drawText(String.format("[ degree = %s 度][W:%sdp,H%sdp] [%s px,%s px]",degree,width,height, ConvertUtils.dp2px(width),ConvertUtils.dp2px(height)),dstRect.left,dstRect.top - tipBoxTopDistance - tipBoxHeight / 4 ,paintTip);
     }
 

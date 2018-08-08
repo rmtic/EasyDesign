@@ -155,7 +155,7 @@ public class EasyDesignHelper {
     public static TextEasyDesign createTextEasyDesign(String label){
 
         //新版本文本设计
-       /* Paint paint     = new Paint();
+        Paint paint     = new Paint();
         Rect  bound     =  new Rect();
         paint.getTextBounds(label,0,label.length(), bound);
 
@@ -176,10 +176,10 @@ public class EasyDesignHelper {
         float[]  dstPs       = srcPs.clone();
         Matrix matrix        = new Matrix();
         TextEasyDesign textEasyDesign = new TextEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix);
-        textEasyDesign.setContent(label);*/
+        textEasyDesign.setContent(label);
 
         //旧版本文本设计
-       Paint paint = new Paint();
+       /*Paint paint = new Paint();
         Rect rect = new Rect();
         paint.getTextBounds(label,0,label.length(), rect);
         TextPaint textPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
@@ -205,7 +205,7 @@ public class EasyDesignHelper {
         float[]  dstPs       = srcPs.clone();
         Matrix matrix        = new Matrix();
         TextEasyDesign textEasyDesign =  new TextEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix);
-        textEasyDesign.setContent(label);
+        textEasyDesign.setContent(label);*/
         return textEasyDesign;
     }
 

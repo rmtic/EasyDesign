@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -81,11 +82,9 @@ public class TextEasyDesign extends BaseEasyDesign {
 
     public void setContent(String content) {
         this.content = content;
-
         Paint paint     = new Paint();
         Rect  bound     =  new Rect();
         paint.getTextBounds(content,0,content.length(), bound);
-
         int boundWidth  = bound.width();
         int boundHeight = bound.height();
         RectF srcRect   = new RectF(0, 0, bound.width(), bound.height());
@@ -101,7 +100,6 @@ public class TextEasyDesign extends BaseEasyDesign {
                 0,boundHeight/2,
                 boundWidth/2,boundHeight/2};
         float[]  dstPs       = srcPs.clone();
-        Matrix matrix        = new Matrix();
         this.srcPs = srcPs;
         this.dstPs = dstPs;
         this.srcRect = srcRect;
@@ -122,17 +120,31 @@ public class TextEasyDesign extends BaseEasyDesign {
 
     @Override
     public void draw(@NonNull Canvas canvas) {
-        canvas.setDrawFilter(new PaintFlagsDrawFilter(0,Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG));
-        canvas.save();
-        long width  = Math.round(Math.sqrt(Math.pow(dstPs[0] - dstPs[4],2)+ Math.pow(dstPs[1] - dstPs[5],2)));
-        long height = Math.round(Math.sqrt(Math.pow(dstPs[4] - dstPs[8],2)+ Math.pow(dstPs[5] - dstPs[9],2)));
-        setTextSizeForWidth(paint,width,content);
-        float degree = EasyDesignHelper.computeDegree(new Point((int)dstPs[2], (int)dstPs[3]),new Point((int)dstPs[16], (int)dstPs[17]));//点与点的垂直夹角
+      /*  canvas.setDrawFilter(new PaintFlagsDrawFilter(0,Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG));
+        canvas.save();*/
+        /* float degree = (float) Math.floor(EasyDesignHelper.computeDegree(new Point((int)dstPs[2], (int)dstPs[3]),new Point((int)dstPs[16], (int)dstPs[17])));//点与点的垂直夹角
         canvas.rotate(degree,dstPs[12],dstPs[13]);
         Rect bounds = new Rect();
         paint.getTextBounds(content, 0, content.length(), bounds);
-        canvas.drawText(content,dstPs[12],dstPs[13] -( height / 2 - bounds.height() / 2),paint);
-        canvas.restore();
+       // canvas.drawText(content,dstPs[12],dstPs[13] -( height / 2 - bounds.height() / 2),paint);
+        canvas.restore();*/
+       /* Paint paint = new Paint();
+        paint.setColor(Color.RED);
+        paint.setAlpha(70);
+        paint.setStrokeWidth(5);
+        canvas.drawLine(dstPs[0], dstPs[1], dstPs[4], dstPs[5], paint);
+        canvas.drawLine(dstPs[4], dstPs[5], dstPs[8], dstPs[9], paint);
+        canvas.drawLine(dstPs[8], dstPs[9], dstPs[12], dstPs[13], paint);
+        canvas.drawLine(dstPs[0], dstPs[1], dstPs[12], dstPs[13], paint);*/
+        //旋转文字，绘制文字
+        long width  = Math.round(Math.sqrt(Math.pow(dstPs[0] - dstPs[4],2)+ Math.pow(dstPs[1] - dstPs[5],2)));
+        long height = Math.round(Math.sqrt(Math.pow(dstPs[4] - dstPs[8],2)+ Math.pow(dstPs[5] - dstPs[9],2)));
+        setTextSizeForWidth(paint,width,content);
+        Path path = new Path();
+        path.moveTo(dstPs[12],dstPs[13]);
+        path.lineTo(dstPs[8],dstPs[9]);
+        canvas.drawTextOnPath(content,path,0,0,paint);
+
     }
 
     /**
@@ -169,6 +181,9 @@ public class TextEasyDesign extends BaseEasyDesign {
     }
 
 
+    public float getTextSize(){
+        return paint.getTextSize();
+    }
 
     /**
      * 计算字体宽度

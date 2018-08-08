@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     tools:context="com.igp.design.MainActivity"
     android:orientation="vertical">
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="TextHere"/>
     <com.igp.easydesign.view.EasyDesignView
         android:id="@+id/easydesignview"
         android:layout_width="match_parent"

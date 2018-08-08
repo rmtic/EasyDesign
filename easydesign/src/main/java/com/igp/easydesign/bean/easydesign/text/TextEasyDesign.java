@@ -9,7 +9,12 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.helper.EasyDesignHelper;
@@ -17,11 +22,6 @@ import com.igp.easydesign.helper.EasyDesignHelper;
 /**
  * Created by qiu on 2018/7/27.
  */
-import android.support.annotation.ColorInt;
-import android.support.annotation.Nullable;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 
 
 /**
@@ -40,7 +40,7 @@ public class TextEasyDesign extends BaseEasyDesign {
     public String fontFamily;
 
     //private TextPaint textPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
-    private StaticLayout staticLayout; //可以换行的换行的布局
+    //private StaticLayout staticLayout; //可以换行的换行的布局
 
     private Layout.Alignment alignment;//对齐
     public String content = "";//显示内容
@@ -74,9 +74,6 @@ public class TextEasyDesign extends BaseEasyDesign {
         this.viewBox = viewBox;
     }
 
-    public float getTextSize(){
-        return staticLayout.getPaint().getTextSize();
-    }
 
     public String getContent() {
         return content;
@@ -84,16 +81,32 @@ public class TextEasyDesign extends BaseEasyDesign {
 
     public void setContent(String content) {
         this.content = content;
-      /*  //获取宽度
-        int text_width = getTextWidth(textPaint,content);
-        if( text_width < intrinsicWidth){
-            staticLayout = new StaticLayout(content, textPaint,text_width,alignment, 1.0f, 0.0f, false);
-            srcRect = new RectF(0, 0,text_width,staticLayout.getHeight());//矩形
-        }else{
-            staticLayout = new StaticLayout(content, textPaint,intrinsicWidth,alignment, 1.0f, 0.0f, false);
-            srcRect = new RectF(0, 0,intrinsicWidth ,staticLayout.getHeight());//矩形
-        }*/
 
+        Paint paint     = new Paint();
+        Rect  bound     =  new Rect();
+        paint.getTextBounds(content,0,content.length(), bound);
+
+        int boundWidth  = bound.width();
+        int boundHeight = bound.height();
+        RectF srcRect   = new RectF(0, 0, bound.width(), bound.height());
+        RectF dstRect   = new RectF();
+        float[] srcPs         = new float[]{
+                0,0,
+                boundWidth/2,0,
+                boundWidth,0,
+                boundWidth,boundHeight/2,
+                boundWidth,boundHeight,
+                boundWidth/2,boundHeight,
+                0,boundHeight,
+                0,boundHeight/2,
+                boundWidth/2,boundHeight/2};
+        float[]  dstPs       = srcPs.clone();
+        Matrix matrix        = new Matrix();
+        this.srcPs = srcPs;
+        this.dstPs = dstPs;
+        this.srcRect = srcRect;
+        this.dstRect = dstRect;
+        update();
     }
 
     public int getKTextDesignWidth(){
@@ -101,50 +114,25 @@ public class TextEasyDesign extends BaseEasyDesign {
     }
 
 
-    public TextEasyDesign(float[] srcPs, float[] dstPs, RectF srcRect, RectF dstRect, Matrix matrix,StaticLayout staticLayout) {
+    public TextEasyDesign(float[] srcPs, float[] dstPs, RectF srcRect, RectF dstRect, Matrix matrix) {
         super(srcPs, dstPs, srcRect, dstRect, matrix);
-        this.staticLayout = staticLayout;
-        //设置上下文
-        //获取图片
-       /* if (drawable == null) {
-            this.drawable = ContextCompat.getDrawable(context, R.drawable.sticker_transparent_background);
-        }*/
-        //创建文字
-        paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);
-        paint.setColor(Color.BLACK);
-        paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
-        alignment = Layout.Alignment.ALIGN_CENTER;//居中对齐
-        paint.setTextSize(textSize);//设置字体大小
         update();
     }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
-        //绘制文本
-       /*
-        canvas.save();
-        canvas.concat(matrix);//合并多个,矩阵
-        if(null != staticLayout){
-            staticLayout.draw(canvas);
-        }
-        canvas.restore();*/
         canvas.setDrawFilter(new PaintFlagsDrawFilter(0,Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG));
         canvas.save();
-        paint.setAntiAlias(true);
-
         long width  = Math.round(Math.sqrt(Math.pow(dstPs[0] - dstPs[4],2)+ Math.pow(dstPs[1] - dstPs[5],2)));
         long height = Math.round(Math.sqrt(Math.pow(dstPs[4] - dstPs[8],2)+ Math.pow(dstPs[5] - dstPs[9],2)));
-
         setTextSizeForWidth(paint,width,content);
         float degree = EasyDesignHelper.computeDegree(new Point((int)dstPs[2], (int)dstPs[3]),new Point((int)dstPs[16], (int)dstPs[17]));//点与点的垂直夹角
         canvas.rotate(degree,dstPs[12],dstPs[13]);
-
         Rect bounds = new Rect();
         paint.getTextBounds(content, 0, content.length(), bounds);
         canvas.drawText(content,dstPs[12],dstPs[13] -( height / 2 - bounds.height() / 2),paint);
         canvas.restore();
-
     }
 
     /**
@@ -179,27 +167,6 @@ public class TextEasyDesign extends BaseEasyDesign {
         // Set the paint for that size.
         paint.setTextSize(desiredTextSize);
     }
-    /**
-     * 设置视图的克隆的文本大小
-     * Sets the text size of a clone of the view's {@link TextPaint} object
-     * and uses a {@link StaticLayout} instance to measure the height of the text.
-     *
-     * @return the height of the text when placed in a view
-     * with the specified width
-     * and when the text has the specified size.
-     */
-    /*protected int getTextHeightPixels(@NonNull CharSequence source, int availableWidthPixels, float textSizePixels) {
-        textPaint.setTextSize(textSizePixels);
-        StaticLayout staticLayout = new StaticLayout(
-                source,
-                textPaint,
-                availableWidthPixels,
-                Layout.Alignment.ALIGN_NORMAL,
-                lineSpacingMultiplier,
-                lineSpacingExtra,
-                true);
-        return staticLayout.getHeight();
-    }*/
 
 
 
@@ -271,6 +238,7 @@ public class TextEasyDesign extends BaseEasyDesign {
      */
     public TextEasyDesign setTypeface(@Nullable Typeface typeface) {
         paint.setTypeface(typeface);
+        setContent(content);
         /*int text_width = getTextWidth(paint,content);
         //rectF = new RectF(0, 0,drawable.getIntrinsicWidth(),staticLayout.getHeight());//矩形
         if( text_width < intrinsicWidth){

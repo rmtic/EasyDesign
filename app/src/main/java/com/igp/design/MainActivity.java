@@ -5,10 +5,13 @@ import android.graphics.Color;
 import android.graphics.RectF;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
@@ -28,10 +31,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-   // DesignView designView;
     private EasyDesignView   mEasyDesignView;
-    private Button btnRoate,btnRoateZero,btnSelect1,btnSelect2,btnNarrow,btnAmplification;
-
+    private EditText etInput;
     ImageEasyDesign imageEasyDesign1;
     ImageEasyDesign imageEasyDesign2;
 
@@ -96,7 +97,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+
        mEasyDesignView   = findViewById(R.id.easydesignview);
+
 
 
        /**创建相关图片*/
@@ -154,13 +160,39 @@ public class MainActivity extends AppCompatActivity {
        mEasyDesignView.addEasyDesign(imageEasyDesign2);                                             //添加一个图片设计模型
 
 
-       TextEasyDesign textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE 12312");  //文本设计
+       final TextEasyDesign textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE 12312");//文本设计
        textEasyDesign.postScale(5.5f,5.5f);
        textEasyDesign.setTextColor(Color.RED);
        mEasyDesignView.addEasyDesign(textEasyDesign);                                               //添加文本设计
+
+
+       etInput   = findViewById(R.id.et_input);
+       etInput.setText(textEasyDesign.getContent());
+       etInput.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+           }
+
+           @Override
+           public void onTextChanged(CharSequence s, int start, int before, int count) {
+               if (textEasyDesign != null) {
+                   textEasyDesign.setContent(s.toString());
+                   mEasyDesignView.invalidate();
+               }
+           }
+
+           @Override
+           public void afterTextChanged(Editable s) {
+
+           }
+       });
+
+
+
        mEasyDesignView.setSelectedEasyDesign(textEasyDesign);                                       //选中文本设计
        textEasyDesign.postTranslate(300,300);
-        mEasyDesignView.invalidate();
+       mEasyDesignView.invalidate();
 
 
 

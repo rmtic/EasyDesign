@@ -154,13 +154,34 @@ public class EasyDesignHelper {
     //创建一个文本设计
     public static TextEasyDesign createTextEasyDesign(String label){
 
-        Paint paint = new Paint();
+        //新版本文本设计
+       /* Paint paint     = new Paint();
+        Rect  bound     =  new Rect();
+        paint.getTextBounds(label,0,label.length(), bound);
+
+        int boundWidth  = bound.width();
+        int boundHeight = bound.height();
+        RectF srcRect   = new RectF(0, 0, bound.width(), bound.height());
+        RectF dstRect   = new RectF();
+        float[] srcPs         = new float[]{
+                0,0,
+                boundWidth/2,0,
+                boundWidth,0,
+                boundWidth,boundHeight/2,
+                boundWidth,boundHeight,
+                boundWidth/2,boundHeight,
+                0,boundHeight,
+                0,boundHeight/2,
+                boundWidth/2,boundHeight/2};
+        float[]  dstPs       = srcPs.clone();
+        Matrix matrix        = new Matrix();
+        TextEasyDesign textEasyDesign = new TextEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix);
+        textEasyDesign.setContent(label);*/
+
+        //旧版本文本设计
+       Paint paint = new Paint();
         Rect rect = new Rect();
         paint.getTextBounds(label,0,label.length(), rect);
-
-       /* int     mainBmpWidth  = rect.width();
-        int     mainBmpHeight = rect.height();*/
-
         TextPaint textPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
         int text_width = getTextWidth(textPaint,label);
         Layout.Alignment alignment = Layout.Alignment.ALIGN_CENTER;//居中对齐
@@ -183,7 +204,7 @@ public class EasyDesignHelper {
                 mainBmpWidth/2,mainBmpHeight/2};
         float[]  dstPs       = srcPs.clone();
         Matrix matrix        = new Matrix();
-        TextEasyDesign textEasyDesign = new TextEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,staticLayout);
+        TextEasyDesign textEasyDesign =  new TextEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix);
         textEasyDesign.setContent(label);
         return textEasyDesign;
     }
@@ -225,8 +246,8 @@ public class EasyDesignHelper {
      * @return
      */
     public static float computeDegree(Point p1, Point p2){
-        float tran_x = p1.x - p2.x;
-        float tran_y = p1.y - p2.y;
+        int tran_x = p1.x - p2.x;
+        int tran_y = p1.y - p2.y;
         float degree = 0.0f;
         float angle = (float)(Math.asin(tran_x/Math.sqrt(tran_x*tran_x + tran_y* tran_y))*180/Math.PI);
         if(!Float.isNaN(angle)){

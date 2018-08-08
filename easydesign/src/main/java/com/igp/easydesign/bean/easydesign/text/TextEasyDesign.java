@@ -173,6 +173,7 @@ public class TextEasyDesign extends BaseEasyDesign {
         Rect bounds = new Rect();
         paint.getTextBounds(text, 0, text.length(), bounds);
 
+
         // Calculate the desired size as a proportion of our testTextSize.
         float desiredTextSize = testTextSize * desiredWidth / bounds.width();
 
@@ -253,16 +254,7 @@ public class TextEasyDesign extends BaseEasyDesign {
      */
     public TextEasyDesign setTypeface(@Nullable Typeface typeface) {
         paint.setTypeface(typeface);
-        setContent(content);
-        /*int text_width = getTextWidth(paint,content);
-        //rectF = new RectF(0, 0,drawable.getIntrinsicWidth(),staticLayout.getHeight());//矩形
-        if( text_width < intrinsicWidth){
-            staticLayout = new StaticLayout(content, paint,text_width,alignment, 1.0f, 0.0f, false);
-            srcRect = new RectF(0, 0,text_width,staticLayout.getHeight());//矩形
-        }else{
-            staticLayout = new StaticLayout(content, paint,intrinsicWidth,alignment, 1.0f, 0.0f, false);
-            srcRect = new RectF(0, 0,intrinsicWidth,staticLayout.getHeight());//矩形
-        }*/
+        setContent(content);//重新设置宽高
         return this;
     }
 }

@@ -128,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
        Bitmap draftBoxUncheck   = EasyDesignHelper.createEasyIconBitmap(EasyDesignHelper.getLocalBitmap(MainActivity.this,R.drawable.draft_box_uncheck));//创建【旋转+放大】图片
        imageEasyDesign1  = EasyDesignHelper.createImageDesign(bitmap1, ImageEasyDesignType.LOCAL_ALBUM);                                                          //创建【图片设计 】 本地图片类型
        imageEasyDesign2  = EasyDesignHelper.createImageDesign(bitmap2, ImageEasyDesignType.REMOTE_ALBUM);                                                         //创建【图片设计 】 远程图片类型
-       imageEasyDesign2.setOriginalWidthDp(200);
-       imageEasyDesign2.setOriginalHeightDp(200);
+       imageEasyDesign2.setOriginalWidthDp(563);
+       imageEasyDesign2.setOriginalHeightDp(1000);
 
 
        RectF markerCopyRect    = new RectF(0, 0, draftBoxUncheck.getWidth(), draftBoxUncheck.getHeight());//旋转+放大 标记边界

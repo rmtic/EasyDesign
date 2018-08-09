@@ -15,6 +15,7 @@ import android.graphics.RectF;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.util.Log;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
@@ -275,21 +276,32 @@ public class EasyDesignHelper {
      * @return
      */
     public static boolean isBlurImage(ImageEasyDesign easyDesign,int imageOriginalWidthDp,int imageOriginalHeightDp,int areaDesignWidthPx,int areaDesignHeightPx,int paramsWidthCM){
-        //如果不是远程图片或者本地图片
-        if(easyDesign.getImageEasyDesignType() != ImageEasyDesignType.REMOTE_ALBUM || easyDesign.getImageEasyDesignType() != ImageEasyDesignType.LOCAL_ALBUM){
+        //如果是贴图则返回false
+       if(easyDesign.getImageEasyDesignType() == ImageEasyDesignType.REMOTE_STICKER){
             return false;
         }
-        int imageDynamicWidthDp   = ((ImageEasyDesign) easyDesign).getDstPsWidthDp();               //获取图片的动态宽度Dp
-        int imageDynamicHeightDp  = ((ImageEasyDesign) easyDesign).getDstPsHeightDp();              //设置图片的动态高度Dp
 
-        int imageDynamicWidthPx   = ConvertUtils.dp2px(imageDynamicWidthDp);                        //动态宽度Px
-        int imageDynamicHeightPx  = ConvertUtils.dp2px(imageDynamicHeightDp);                       //动态高度Px
+        int     imageDynamicWidthDp   = ((ImageEasyDesign) easyDesign).getDstPsWidthDp();           //获取图片的动态宽度Dp
+        int     imageDynamicHeightDp  = ((ImageEasyDesign) easyDesign).getDstPsHeightDp();          //设置图片的动态高度Dp
 
-        int imageOriginalWidthPx  = ConvertUtils.dp2px(imageOriginalWidthDp);                       //原始宽度Px
-        int imageOriginalHeightPx = ConvertUtils.dp2px(imageOriginalHeightDp);                      //原始高度Px
-        float              sizecn              = (float)(paramsWidthCM / 0.02 / areaDesignWidthPx);                                                                            //SizeCn
-        int                imageMaxWidthPx     = (int) (imageOriginalWidthPx * sizecn);                                                                                        //图片最多宽度
-        int                imageMaxHeightPx    = (int) (imageOriginalHeightPx * sizecn);                                                                                       //图片最大高度
+        int     imageDynamicWidthPx   = ConvertUtils.dp2px(imageDynamicWidthDp);                    //动态宽度Px
+        int     imageDynamicHeightPx  = ConvertUtils.dp2px(imageDynamicHeightDp);                   //动态高度Px
+
+        int     imageOriginalWidthPx  = ConvertUtils.dp2px(imageOriginalWidthDp);                   //原始宽度Px
+        int     imageOriginalHeightPx = ConvertUtils.dp2px(imageOriginalHeightDp);                  //原始高度Px
+        float   sizecn                = (float)(paramsWidthCM / 0.02 / areaDesignWidthPx);          //SizeCn
+        int     imageMaxWidthPx       = (int) (imageOriginalWidthPx * sizecn);                      //图片最多宽度
+        int     imageMaxHeightPx      = (int) (imageOriginalHeightPx * sizecn);                     //图片最大高度
+
+        Log.i("EasyDesignHelper", "imageDynamicWidthDp:" + imageDynamicWidthDp);
+        Log.i("EasyDesignHelper", "imageDynamicHeightDp:" + imageDynamicHeightDp);
+        Log.i("EasyDesignHelper", "imageDynamicWidthPx:" + imageDynamicWidthPx);
+        Log.i("EasyDesignHelper", "imageOriginalWidthPx:" + imageOriginalWidthPx);
+        Log.i("EasyDesignHelper", "imageDynamicHeightPx:" + imageDynamicHeightPx);
+        Log.i("EasyDesignHelper", "imageOriginalHeightPx:" + imageOriginalHeightPx);
+        Log.i("EasyDesignHelper", "sizecn:" + sizecn);
+        Log.i("EasyDesignHelper", "imageMaxWidthPx:" + imageMaxWidthPx);
+        Log.i("EasyDesignHelper", "imageMaxHeightPx:" + imageMaxHeightPx);
 
         if(imageDynamicHeightPx > imageMaxHeightPx || imageDynamicWidthPx > imageMaxWidthPx){
             return true;

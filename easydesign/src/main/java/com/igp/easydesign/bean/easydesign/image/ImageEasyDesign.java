@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
+import com.igp.easydesign.helper.EasyDesignHelper;
 
 /**
  * Created by qiu on 2018/7/27.
@@ -118,5 +119,6 @@ public class ImageEasyDesign extends BaseEasyDesign {
     public void setBulr(boolean bulr) {
         isBulr = bulr;
     }
+
 
 }

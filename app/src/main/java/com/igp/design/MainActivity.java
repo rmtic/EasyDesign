@@ -10,13 +10,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesignType;
-import com.igp.easydesign.bean.easydesign.svg.SvgEasyDesign;
 import com.igp.easydesign.bean.easydesign.text.TextEasyDesign;
 import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.icon.EasyIconType;
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etInput;
     ImageEasyDesign imageEasyDesign1;
     ImageEasyDesign imageEasyDesign2;
-
+    TextEasyDesign textEasyDesign;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -44,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+
 
         int id = item.getItemId();
 
@@ -85,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
                     mEasyDesignView.rotateValueAnimator(30);
                 }
                 break;
+            case R.id.action_clone:
+                ToastUtils.showLong("克隆待开发");
+                /*TextEasyDesign textEasyDesign2 = (TextEasyDesign)textEasyDesign.clone();
+                textEasyDesign2.postScale(5.5f,5.5f);
+                textEasyDesign2.setTextColor(Color.BLUE);
+                mEasyDesignView.addEasyDesign(textEasyDesign2);                                    //添加文本设计*/
+                break;
             default:
                 break;
         }
@@ -103,26 +111,25 @@ public class MainActivity extends AppCompatActivity {
 
        mEasyDesignView   = findViewById(R.id.easydesignview);
 
-        mEasyDesignView.setEnableDrawDstRectBg  (true);                                             //是否允许绘制背景
-        mEasyDesignView.setEnableDrawEasySpace  (true);                                             //是否允许绘制设计区
-        mEasyDesignView.setEnableDrawEasyMask   (true);                                             //是否允许绘制遮罩
-        mEasyDesignView.setEnableDrawDstPsLine  (true);                                             //是否绘制小矩形边框
-        mEasyDesignView.setEnableDrawDstRectLine(true);                                             //是否绘制矩阵范围的框
-        mEasyDesignView.setEnableDrawGridLine   (true);                                             //是否绘制矩阵范围的网格
-        mEasyDesignView.setEnableDrawDstpsPoint (true);                                             //是否绘制矩阵点
-        mEasyDesignView.setEnableDrawLeetToptips(true);                                             //是否绘制提示文字
-        mEasyDesignView.setEnableDrawEasyIcons  (true);                                             //是否绘制控制图标
-
-
+        mEasyDesignView.setEnableDrawDstRectBg  (true);                                                                                                            //是否允许绘制背景
+        mEasyDesignView.setEnableDrawEasySpace  (true);                                                                                                            //是否允许绘制设计区
+        mEasyDesignView.setEnableDrawEasyMask   (true);                                                                                                            //是否允许绘制遮罩
+        mEasyDesignView.setEnableDrawDstPsLine  (true);                                                                                                            //是否绘制小矩形边框
+        mEasyDesignView.setEnableDrawDstRectLine(true);                                                                                                            //是否绘制矩阵范围的框
+        mEasyDesignView.setEnableDrawGridLine   (true);                                                                                                            //是否绘制矩阵范围的网格
+        mEasyDesignView.setEnableDrawDstpsPoint (true);                                                                                                            //是否绘制矩阵点
+        mEasyDesignView.setEnableDrawLeetToptips(true);                                                                                                            //是否绘制提示文字
+        mEasyDesignView.setEnableDrawEasyIcons  (true);                                                                                                            //是否绘制控制图标
 
        /**创建相关图片*/
-       Bitmap bitmap1           = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.test);                  //创建【图片设计1】
-       Bitmap bitmap2           = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.a);                     //创建【图片设计2】
-       Bitmap bitmapWarning     = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.ic_warning);            //创建【警告     】图片
+       Bitmap bitmap1           = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.test);                                                      //创建【图片设计1】
+       Bitmap bitmap2           = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.a);                                                         //创建【图片设计2】
+       Bitmap bitmapWarning     = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.ic_warning);                                                //创建【警告     】图片
        Bitmap draftBoxUncheck   = EasyDesignHelper.createEasyIconBitmap(EasyDesignHelper.getLocalBitmap(MainActivity.this,R.drawable.draft_box_uncheck));//创建【旋转+放大】图片
-       imageEasyDesign1  = EasyDesignHelper.createImageDesign(bitmap1, ImageEasyDesignType.LOCAL_ALBUM);                                //创建【图片设计 】 本地图片类型
-       imageEasyDesign2  = EasyDesignHelper.createImageDesign(bitmap2, ImageEasyDesignType.REMOTE_ALBUM);                               //创建【图片设计 】 远程图片类型
-
+       imageEasyDesign1  = EasyDesignHelper.createImageDesign(bitmap1, ImageEasyDesignType.LOCAL_ALBUM);                                                          //创建【图片设计 】 本地图片类型
+       imageEasyDesign2  = EasyDesignHelper.createImageDesign(bitmap2, ImageEasyDesignType.REMOTE_ALBUM);                                                         //创建【图片设计 】 远程图片类型
+       imageEasyDesign2.setOriginalWidthDp(200);
+       imageEasyDesign2.setOriginalHeightDp(200);
 
 
        RectF markerCopyRect    = new RectF(0, 0, draftBoxUncheck.getWidth(), draftBoxUncheck.getHeight());//旋转+放大 标记边界
@@ -170,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
        mEasyDesignView.addEasyDesign(imageEasyDesign2);                                             //添加一个图片设计模型
 
 
-       final TextEasyDesign textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE 12312");//文本设计
+       textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE 12312");//文本设计
        textEasyDesign.postScale(5.5f,5.5f);
        textEasyDesign.setTextColor(Color.RED);
        mEasyDesignView.addEasyDesign(textEasyDesign);                                               //添加文本设计
@@ -210,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
         mEasyDesignView.setOnEasyDesignViewListener(new OnEasyDesignViewListener() {
             @Override
             public void onEasyDesignChange(BaseEasyDesign easyDesign, EasyEventType easyEventType) {
+                //这是设计组件发生事件变化
                 Log.i("print", "easyEventType:" + easyEventType.name());
             }
         });

@@ -25,7 +25,7 @@ import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
  *      02.设置文字内容（）
  * *************************************************************************************************
  */
-public class TextEasyDesign extends BaseEasyDesign {
+public class TextEasyDesign extends BaseEasyDesign{
 
     public String rbg;
     public int textColor;
@@ -223,4 +223,20 @@ public class TextEasyDesign extends BaseEasyDesign {
         setContent(content);//重新设置宽高
         return this;
     }
+
+  /*  public Object clone()
+    {
+        TextEasyDesign o=null;
+        try
+        {
+            o=(TextEasyDesign)super.clone();
+        }
+        catch(CloneNotSupportedException e)
+        {
+            System.out.println(e.toString());
+        }
+        o.srcPs=(float[])srcPs.clone();
+        o.dstPs=(float[])dstPs.clone();
+        return o;
+    }*/
 }

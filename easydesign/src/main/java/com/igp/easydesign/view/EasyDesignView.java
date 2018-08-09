@@ -8,6 +8,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
+
 import com.igp.easydesign.bean.easycontrol.EasyControl;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.bean.icon.EasyIcon;
@@ -24,11 +26,11 @@ import java.util.List;
 public class EasyDesignView extends BaseEasyDesignView {
 
 
-    private Context context;                                        //上下文
-    public List<BaseEasyDesign> baseEasyDesigns = new ArrayList<>();//会员设计集合
-    public EasyControl          easyControl     = new EasyControl();//控制器
-    public EasySpace            easySpace;                          //设计区 //TODO 待开发 设计平台基本信息
-    public EasyMask             easyMask;                           //遮罩层图片
+    private Context context;                                                                        //上下文
+    public List<BaseEasyDesign> baseEasyDesigns = new ArrayList<>();                                //会员设计集合
+    public EasyControl          easyControl     = new EasyControl();                                //控制器
+    public EasySpace            easySpace;                                                          //设计区
+    public EasyMask             easyMask;                                                           //遮罩层图片
 
 
     @Override
@@ -50,8 +52,6 @@ public class EasyDesignView extends BaseEasyDesignView {
     @Override
     public void setEasyControl(EasyControl easyControl) {
         this.easyControl = easyControl;
-        //this.easyControl.setOnChangeEasyDesignListener(this);
-
     }
 
     @Override

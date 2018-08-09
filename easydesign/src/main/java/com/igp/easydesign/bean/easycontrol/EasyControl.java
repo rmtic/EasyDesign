@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.ImageEasyDesignType;
 import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.icon.EasyIconType;
 import com.igp.easydesign.helper.EasyDesignHelper;
@@ -155,14 +157,24 @@ public class EasyControl extends BaseEasyControl {
 
         long width  = Math.round(Math.sqrt(Math.pow(dstPs[0] - dstPs[4],2)+ Math.pow(dstPs[1] - dstPs[5],2)));
         long height = Math.round(Math.sqrt(Math.pow(dstPs[4] - dstPs[8],2)+ Math.pow(dstPs[5] - dstPs[9],2)));
-
         Paint paintTip = new Paint();
         paintTip.setAlpha(100);
         paintTip.setTextSize(18);
-        paintTip.setColor(Color.WHITE);
-
+        paintTip.setColor(Color.RED);
+        //绘制角度信息
         float degree = (float) Math.floor(EasyDesignHelper.computeDegree(new Point((int)dstPs[2], (int)dstPs[3]),new Point((int)dstPs[16], (int)dstPs[17])));//点与点的垂直夹角
         canvas.drawText(String.format("[ degree = %s °][W:%sdp,H%sdp] [%s px,%s px]",degree,width,height, ConvertUtils.dp2px(width),ConvertUtils.dp2px(height)),dstRect.left,dstRect.top - tipBoxTopDistance - tipBoxHeight / 4 ,paintTip);
+
+        //绘制图片设计的信息
+        if (easyDesign instanceof ImageEasyDesign) {
+            ImageEasyDesign imageEasyDesign = ((ImageEasyDesign) easyDesign);
+            canvas.drawText(String.format("[ 图片类型 [ %s ],是否模糊[%s]",imageEasyDesign.getImageEasyDesignType(),imageEasyDesign.isBulr()),dstRect.left,dstRect.top - tipBoxTopDistance - tipBoxHeight / 4 - 20 ,paintTip);
+            if (imageEasyDesign.getImageEasyDesignType() == ImageEasyDesignType.LOCAL_ALBUM || imageEasyDesign.getImageEasyDesignType() == ImageEasyDesignType.REMOTE_ALBUM) {
+                canvas.drawText(String.format("[ 原始宽高 [ %s , %s ]",imageEasyDesign.getOriginalWidthDp(),imageEasyDesign.getOriginalHeightDp()),dstRect.left,dstRect.top - tipBoxTopDistance - tipBoxHeight / 4 - 40 ,paintTip);
+            }
+        }
+
+
     }
 
 

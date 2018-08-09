@@ -36,7 +36,7 @@ import com.igp.easydesign.helper.EasyDesignHelper;
  * *************************************************************************************************
  */
 
-public abstract class BaseEasyDesign {
+public abstract class BaseEasyDesign{
 
     public boolean isLocked   = false;
     public boolean isSelected = false;
@@ -45,7 +45,6 @@ public abstract class BaseEasyDesign {
     public float[] srcPs  , dstPs;
     public RectF   srcRect,dstRect;
     public Matrix  matrix;
-
     public BaseEasyDesign(float[] srcPs, float[] dstPs, RectF srcRect, RectF dstRect, Matrix matrix) {
         this.srcPs   = srcPs;
         this.dstPs   = dstPs;
@@ -243,40 +242,5 @@ public abstract class BaseEasyDesign {
         }
         return degree;
     }
-
-
-/*    public Object clone()
-    {
-        BaseEasyDesign o=null;
-        try
-        {
-            o=(BaseEasyDesign)super.clone();
-        }
-        catch(CloneNotSupportedException e)
-        {
-            System.out.println(e.toString());
-        }
-        o.srcPs=(float[])srcPs.clone();
-        o.dstPs=(float[])dstPs.clone();
-        return o;
-    }*/
-
-    //
-//	//浅克隆
-//    public TextBox clone() throws CloneNotSupportedException {
-//        return (TextBox) super.clone();
-//    }
-
-    //深克隆
-   /* public TextBox clone() throws CloneNotSupportedException {
-        TextBox o =  (TextBox) super.clone();
-
-        //对于string，int等基本类型，用上面一句就可以
-        //对于复杂类型，例如PointF等还需要手动实现拷贝
-        if(mtextpos != null)
-            o.mtextpos = new PointF(mtextpos.x,mtextpos.y);
-
-        return o;
-    }*/
 
 }

@@ -8,7 +8,6 @@ import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.provider.SyncStateContract;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -18,8 +17,8 @@ import android.view.View;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.igp.easydesign.bean.easycontrol.EasyControl;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
-import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
-import com.igp.easydesign.bean.easydesign.image.ImageEasyDesignType;
+import com.igp.easydesign.bean.easydesign.image.LocalImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.RemoteImageEasyDesign;
 import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.icon.EasyIconType;
 import com.igp.easydesign.bean.mask.EasyMask;
@@ -120,16 +119,16 @@ public abstract class BaseEasyDesignView extends View  {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        /**判断是否模糊*/
         if (getSelectedEasyDesign() != null) {
-            if (getSelectedEasyDesign() instanceof ImageEasyDesign) {
-
-                ImageEasyDesign imageEasyDesign = ((ImageEasyDesign) getSelectedEasyDesign());
-                if(imageEasyDesign.getImageEasyDesignType() == ImageEasyDesignType.REMOTE_ALBUM || imageEasyDesign.getImageEasyDesignType() == ImageEasyDesignType.LOCAL_ALBUM){
-                   int areaDesignWidthPx =  ConvertUtils.dp2px(getEasySpace().getRect().width());
-                   int areaDesignHeightPx =  ConvertUtils.dp2px(getEasySpace().getRect().height());
-                    imageEasyDesign.setBulr(EasyDesignHelper.isBlurImage(imageEasyDesign,imageEasyDesign.getOriginalWidthDp(),imageEasyDesign.getOriginalHeightDp(),areaDesignWidthPx,areaDesignHeightPx,getEasySpace().paramsWidthCM
-                    ));
-                }
+            if( getSelectedEasyDesign() instanceof LocalImageEasyDesign ){
+                int areaDesignWidthPx  =  ConvertUtils.dp2px(getEasySpace().getRect().width());
+                int areaDesignHeightPx =  ConvertUtils.dp2px(getEasySpace().getRect().height());
+                ((LocalImageEasyDesign) getSelectedEasyDesign()).setBulr(EasyDesignHelper.isBlurImage(((LocalImageEasyDesign) getSelectedEasyDesign()),((LocalImageEasyDesign) getSelectedEasyDesign()).getOriginalWidthDp(),((LocalImageEasyDesign) getSelectedEasyDesign()).getOriginalHeightDp(),areaDesignWidthPx,areaDesignHeightPx,getEasySpace().paramsWidthCM));
+            }else if(getSelectedEasyDesign() instanceof RemoteImageEasyDesign){
+                int areaDesignWidthPx  =  ConvertUtils.dp2px(getEasySpace().getRect().width());
+                int areaDesignHeightPx =  ConvertUtils.dp2px(getEasySpace().getRect().height());
+                ((RemoteImageEasyDesign) getSelectedEasyDesign()).setBulr(EasyDesignHelper.isBlurImage(((RemoteImageEasyDesign) getSelectedEasyDesign()),((RemoteImageEasyDesign) getSelectedEasyDesign()).getOriginalWidthDp(),((RemoteImageEasyDesign) getSelectedEasyDesign()).getOriginalHeightDp(),areaDesignWidthPx,areaDesignHeightPx,getEasySpace().paramsWidthCM));
             }
         }
 

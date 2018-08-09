@@ -23,6 +23,9 @@ import com.blankj.utilcode.util.ScreenUtils;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesignType;
+import com.igp.easydesign.bean.easydesign.image.LocalImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.RemoteImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.StickImageDesign;
 import com.igp.easydesign.bean.easydesign.text.TextEasyDesign;
 import com.igp.easydesign.bean.mask.EasyMask;
 import com.igp.easydesign.bean.space.EasySpace;
@@ -128,11 +131,94 @@ public class EasyDesignHelper {
         return new EasySpace( rect , matrix ,paint ,color , paramsWidthCM, paramsHeightCM );
     }
 
+
+    /**
+     * 创建本地图片设计
+     * @param bitmap
+     * @param originalImgWidth
+     * @param originalImgHeight
+     * @return
+     */
+    public static LocalImageEasyDesign createLoaclImageEasyDesign(Bitmap bitmap ,int originalImgWidth ,int originalImgHeight){
+        int     bitmapWidth  = bitmap.getWidth();
+        int     bitmapHeight = bitmap.getHeight();
+        RectF srcRect        = new RectF(0, 0, bitmapWidth, bitmapHeight);
+        RectF   dstRect      = new RectF();
+        float[] srcPs        = new float[]{
+                0,0,
+                bitmapWidth/2,0,
+                bitmapWidth,0,
+                bitmapWidth,bitmapHeight/2,
+                bitmapWidth,bitmapHeight,
+                bitmapWidth/2,bitmapHeight,
+                0,bitmapHeight,
+                0,bitmapHeight/2,
+                bitmapWidth/2,bitmapHeight/2};
+        float[]  dstPs       = srcPs.clone();
+        Matrix matrix        = new Matrix();
+        LocalImageEasyDesign localImageEasyDesign = new LocalImageEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,bitmap,originalImgWidth,originalImgHeight);
+        return localImageEasyDesign;
+    }
+
+    /**
+     * 创建远程图片设计
+     * @param bitmap
+     * @param originalImgWidth
+     * @param originalImgHeight
+     * @return
+     */
+    public static RemoteImageEasyDesign createRemoteImageEasyDesign(Bitmap bitmap , int originalImgWidth , int originalImgHeight){
+        int     bitmapWidth  = bitmap.getWidth();
+        int     bitmapHeight = bitmap.getHeight();
+        RectF srcRect        = new RectF(0, 0, bitmapWidth, bitmapHeight);
+        RectF   dstRect      = new RectF();
+        float[] srcPs        = new float[]{
+                0,0,
+                bitmapWidth/2,0,
+                bitmapWidth,0,
+                bitmapWidth,bitmapHeight/2,
+                bitmapWidth,bitmapHeight,
+                bitmapWidth/2,bitmapHeight,
+                0,bitmapHeight,
+                0,bitmapHeight/2,
+                bitmapWidth/2,bitmapHeight/2};
+        float[]  dstPs       = srcPs.clone();
+        Matrix matrix        = new Matrix();
+        RemoteImageEasyDesign remoteImageEasyDesign = new RemoteImageEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,bitmap,originalImgWidth,originalImgHeight);
+        return remoteImageEasyDesign;
+    }
+
+    /**
+     * 创建贴图设计
+     * @param bitmap
+     * @return
+     */
+    public static StickImageDesign createStickImageDesign(Bitmap bitmap){
+        int     bitmapWidth  = bitmap.getWidth();
+        int     bitmapHeight = bitmap.getHeight();
+        RectF   srcRect      = new RectF(0, 0, bitmapWidth, bitmapHeight);
+        RectF   dstRect      = new RectF();
+        float[] srcPs        = new float[]{
+                0,0,
+                bitmapWidth/2,0,
+                bitmapWidth,0,
+                bitmapWidth,bitmapHeight/2,
+                bitmapWidth,bitmapHeight,
+                bitmapWidth/2,bitmapHeight,
+                0,bitmapHeight,
+                0,bitmapHeight/2,
+                bitmapWidth/2,bitmapHeight/2};
+        float[]  dstPs       = srcPs.clone();
+        Matrix matrix        = new Matrix();
+        StickImageDesign stickImageDesign = new StickImageDesign(srcPs,dstPs,srcRect,dstRect,matrix,bitmap);
+        return stickImageDesign;
+    }
+
     /**
      * 创建一个图片设计
      * @return
      */
-    public static ImageEasyDesign createImageDesign(Bitmap bitmap, ImageEasyDesignType imageEasyDesignType){
+    public static ImageEasyDesign createImageDesign(Bitmap bitmap){
         //Bitmap mainBmp       = BitmapFactory.decodeResource(this.context.getResources(), R.mipmap.test);
         int     mainBmpWidth  = bitmap.getWidth();
         int     mainBmpHeight = bitmap.getHeight();
@@ -150,7 +236,7 @@ public class EasyDesignHelper {
                 mainBmpWidth/2,mainBmpHeight/2};
         float[]  dstPs       = srcPs.clone();
         Matrix matrix        = new Matrix();
-        return new ImageEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,bitmap,imageEasyDesignType);
+        return new ImageEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,bitmap);
     }
     //创建一个文本设计
     public static TextEasyDesign createTextEasyDesign(String label){
@@ -277,7 +363,7 @@ public class EasyDesignHelper {
      */
     public static boolean isBlurImage(ImageEasyDesign easyDesign,int imageOriginalWidthDp,int imageOriginalHeightDp,int areaDesignWidthPx,int areaDesignHeightPx,int paramsWidthCM){
         //如果是贴图则返回false
-       if(easyDesign.getImageEasyDesignType() == ImageEasyDesignType.REMOTE_STICKER){
+       if(easyDesign.getImageEasyDesignType() == ImageEasyDesignType.STICKER){
             return false;
         }
 

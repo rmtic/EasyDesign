@@ -7,12 +7,12 @@
     <item
         android:id="@+id/action_add_imagedesign"
         android:orderInCategory="0"
-        android:title="添加图片设计"
+        android:title="添加图片设计1"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_del_imagedesign"
         android:orderInCategory="0"
-        android:title="删除图片设计"
+        android:title="删除当前设计"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_sel_imagedesign1"

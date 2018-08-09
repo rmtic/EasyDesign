@@ -32,9 +32,4 @@ public abstract class BaseEasyControl {
     public abstract void setEasyIconList(List<EasyIcon> easyIconList);                              //设置图标列表
     public abstract List<EasyIcon> getEasyIconList();                                               //获取图标列表
     public abstract void drawEasyIcons(Canvas canvas);                                              //绘制所有图标
-
-
-
-
-
 }

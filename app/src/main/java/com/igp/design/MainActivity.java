@@ -15,7 +15,9 @@ import android.widget.EditText;
 import com.blankj.utilcode.util.ToastUtils;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
-import com.igp.easydesign.bean.easydesign.image.ImageEasyDesignType;
+import com.igp.easydesign.bean.easydesign.image.LocalImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.RemoteImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.StickImageDesign;
 import com.igp.easydesign.bean.easydesign.text.TextEasyDesign;
 import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.icon.EasyIconType;
@@ -32,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     private EasyDesignView   mEasyDesignView;
     private EditText etInput;
-    ImageEasyDesign imageEasyDesign1;
-    ImageEasyDesign imageEasyDesign2;
+    LocalImageEasyDesign  localImageDesign;
+    RemoteImageEasyDesign remoteImageDesign;
+    StickImageDesign      stickImageDesign;
+
+
     TextEasyDesign textEasyDesign;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_add_imagedesign:
-                mEasyDesignView.addEasyDesign(imageEasyDesign1);
+                mEasyDesignView.addEasyDesign(localImageDesign);
                 break;
             case R.id.action_del_imagedesign:
                 if(mEasyDesignView.getSelectedEasyDesign() != null){
@@ -61,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 mEasyDesignView.removeAllEasyDesign();
                 break;
             case R.id.action_sel_imagedesign1:
-                if (imageEasyDesign1 != null) {
-                    mEasyDesignView.setSelectedEasyDesign(imageEasyDesign1);
+                if (localImageDesign != null) {
+                    mEasyDesignView.setSelectedEasyDesign(localImageDesign);
                 }
             case R.id.action_amplification:
                 if (mEasyDesignView.getSelectedEasyDesign() != null) {
@@ -124,12 +129,16 @@ public class MainActivity extends AppCompatActivity {
        /**创建相关图片*/
        Bitmap bitmap1           = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.test);                                                      //创建【图片设计1】
        Bitmap bitmap2           = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.a);                                                         //创建【图片设计2】
-       Bitmap bitmapWarning     = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.ic_warning);                                                //创建【警告     】图片
+       Bitmap stickBitmap       = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.cool);                                                      //创建【图片设计2】
        Bitmap draftBoxUncheck   = EasyDesignHelper.createEasyIconBitmap(EasyDesignHelper.getLocalBitmap(MainActivity.this,R.drawable.draft_box_uncheck));//创建【旋转+放大】图片
-       imageEasyDesign1  = EasyDesignHelper.createImageDesign(bitmap1, ImageEasyDesignType.LOCAL_ALBUM);                                                          //创建【图片设计 】 本地图片类型
-       imageEasyDesign2  = EasyDesignHelper.createImageDesign(bitmap2, ImageEasyDesignType.REMOTE_ALBUM);                                                         //创建【图片设计 】 远程图片类型
-       imageEasyDesign2.setOriginalWidthDp(563);
-       imageEasyDesign2.setOriginalHeightDp(1000);
+
+
+       localImageDesign  = EasyDesignHelper.createLoaclImageEasyDesign(bitmap1 ,200,200);                                     //创建【图片设计 】 本地图片类型
+       remoteImageDesign = EasyDesignHelper.createRemoteImageEasyDesign(bitmap2,300,300);                                     //创建【图片设计 】 远程图片类型
+       stickImageDesign  = EasyDesignHelper.createStickImageDesign(stickBitmap);
+
+
+
 
 
        RectF markerCopyRect    = new RectF(0, 0, draftBoxUncheck.getWidth(), draftBoxUncheck.getHeight());//旋转+放大 标记边界
@@ -144,7 +153,10 @@ public class MainActivity extends AppCompatActivity {
         mEasyDesignView.setEasyMask(easyMask);
 
        List<EasyIcon> easyIconList = new ArrayList<>();                                             //控制器【图标集合】
-       easyIconList.add(new EasyIcon(draftBoxUncheck,markerCopyRect, EasyIconType.RIGHT_BOTTOM));   //添加  【右下角图标】
+       EasyIcon easyIcon = new EasyIcon(draftBoxUncheck,EasyIconType.RIGHT_BOTTOM);                //添加  【右下角图标】
+       easyIconList.add(easyIcon);
+
+
        mEasyDesignView.setEasyIconList(easyIconList);                                               //给控制器设置一组图标
        mEasyDesignView.setOnEasyDesignViewListener(new OnEasyDesignViewListener() {
            @Override
@@ -173,11 +185,16 @@ public class MainActivity extends AppCompatActivity {
 
         /** 相关手动操作设计的实现 */
 
-       mEasyDesignView.addEasyDesign(imageEasyDesign1);                                             //添加一个图片设计模型
-       mEasyDesignView.addEasyDesign(imageEasyDesign2);                                             //添加一个图片设计模型
 
 
-       textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE 12312");//文本设计
+       stickImageDesign.postTranslate(easySpace.getRect().centerX(),easySpace.getRect().centerY());
+
+       mEasyDesignView.addEasyDesign(localImageDesign);                                             //添加一个图片设计模型
+       mEasyDesignView.addEasyDesign(remoteImageDesign);                                            //添加一个图片设计模型
+       mEasyDesignView.addEasyDesign(stickImageDesign);                                             //添加一个贴纸设计模型
+
+
+       textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE");//文本设计
        textEasyDesign.postScale(5.5f,5.5f);
        textEasyDesign.setTextColor(Color.RED);
        mEasyDesignView.addEasyDesign(textEasyDesign);                                               //添加文本设计
@@ -224,9 +241,9 @@ public class MainActivity extends AppCompatActivity {
 
 
        /** 相关手动操作设计的实现 */
-       //mEasyDesignView.setSelectedEasyDesign(imageEasyDesign2);                                   //手动操作【选中】
-       //imageEasyDesign2.postTranslate(300,500);                                                   //手动操作【移动】
-       //imageEasyDesign2.postRotate(45);                                                           //手动操作【旋转】
+       //mEasyDesignView.setSelectedEasyDesign(remoteImageDesign);                                   //手动操作【选中】
+       //remoteImageDesign.postTranslate(300,500);                                                   //手动操作【移动】
+       //remoteImageDesign.postRotate(45);                                                           //手动操作【旋转】
        //动画旋转
        //动画放大
     }

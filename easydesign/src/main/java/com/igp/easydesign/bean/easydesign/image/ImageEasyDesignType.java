@@ -6,7 +6,7 @@ package com.igp.easydesign.bean.easydesign.image;
  */
 public enum ImageEasyDesignType{
     REMOTE_ALBUM     (0),
-    REMOTE_STICKER   (1),
+    STICKER          (1),
     LOCAL_ALBUM      (2);
     ImageEasyDesignType(int ni) {
         nativeInt = ni;

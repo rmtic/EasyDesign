@@ -51,9 +51,8 @@ public class ImageEasyDesign extends BaseEasyDesign {
     public boolean             isBulr      = false;
 
 
-    public ImageEasyDesign(float[] srcPs, float[] dstPs, RectF srcRect, RectF dstRect, Matrix matrix, Bitmap bitmap, ImageEasyDesignType imageEasyDesignType) {
+    public ImageEasyDesign(float[] srcPs, float[] dstPs, RectF srcRect, RectF dstRect, Matrix matrix, Bitmap bitmap) {
         super(srcPs, dstPs, srcRect, dstRect, matrix);
-        this.imageEasyDesignType = imageEasyDesignType;
         this.bitmap = bitmap;
     }
 

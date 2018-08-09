@@ -3,6 +3,8 @@ package com.igp.easydesign.bean.icon;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
 
+import com.igp.easydesign.helper.EasyDesignHelper;
+
 /**
  * EasyIcon Design
  * Created by Sam on 2018/7/30.
@@ -12,6 +14,12 @@ public class EasyIcon {
     private Bitmap       bitmap;
     private RectF        rectF;
     private EasyIconType easyIconType;
+
+    public EasyIcon(Bitmap bitmap,EasyIconType easyIconType) {
+        this.bitmap = bitmap;
+        this.rectF = new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        this.easyIconType = easyIconType;
+    }
 
     public EasyIcon(Bitmap bitmap, RectF rectF, EasyIconType easyIconType) {
         this.bitmap = bitmap;

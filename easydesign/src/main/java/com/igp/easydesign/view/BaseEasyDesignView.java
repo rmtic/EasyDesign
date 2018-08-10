@@ -184,10 +184,10 @@ public abstract class BaseEasyDesignView extends View  {
             case MotionEvent.ACTION_DOWN:
                 /** 手指按下时有如下3中情况（由上至下排序 1. 控制按钮 2.设计 3.平台背景） */
                 actionDown();
-                invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
                 //拖动/旋转/放大/旋转+放大
+                change();
                 switch (actionMode) {
                     case ACTION_DRAG:
                         actionDrag();
@@ -207,8 +207,6 @@ public abstract class BaseEasyDesignView extends View  {
                     default:
                         break;
                 }
-                change();
-                invalidate();
                 break;
             case MotionEvent.ACTION_UP:
                 invalidate();
@@ -248,6 +246,7 @@ public abstract class BaseEasyDesignView extends View  {
         // 缩放 + 旋转
         actionScaleEasyDesign();
         actionRotateEasyDesign();
+        this.invalidate();
     }
 
     public float spacing(MotionEvent event) {
@@ -270,22 +269,19 @@ public abstract class BaseEasyDesignView extends View  {
             for (BaseEasyDesign baseEasyDesign : getBaseEasyDesigns()) {
                 if(isInEasyDesignBitmap(baseEasyDesign.matrix,baseEasyDesign.getSrcRect(),downPoint)){//如果在图片上
                     setSelectedEasyDesign(baseEasyDesign);
-                    if (onEasyDesignViewListener != null) {
-                        onEasyDesignViewListener.onEasyDesignChange(baseEasyDesign,EasyEventType.SELECTED);
-                    }
                 }
             }
         }else{
             actionMode = ACTION_NONE;
             if (getEasyControl() != null) {
                 setSelectedEasyDesign(null);
-                if (onEasyDesignViewListener != null) {
-                    onEasyDesignViewListener.onEasyDesignChange(null,EasyEventType.SELECTED);
-                }
             }
         }
         /** 当前设计发生变化会触发onEasyDesignChange（）*/
-
+        if (onEasyDesignViewListener != null) {
+            onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(),EasyEventType.SELECTED);
+        }
+        this.invalidate();
     }
 
     /**
@@ -295,6 +291,7 @@ public abstract class BaseEasyDesignView extends View  {
         if (getSelectedEasyDesign() != null && isInEasyDesignBitmap(getSelectedEasyDesign().matrix,getSelectedEasyDesign().getSrcRect(),downPoint)) {
             getSelectedEasyDesign().postTranslate((curX - preX) * drawDensity, (curY - preY) * drawDensity);
         }
+        invalidate();
     }
 
     /**

@@ -214,6 +214,7 @@ public abstract class BaseEasyDesignView extends View  {
             default:
                 break;
         }
+        invalidate();
         preX = curX;
         preY = curY;
         return true;
@@ -281,7 +282,6 @@ public abstract class BaseEasyDesignView extends View  {
         if (onEasyDesignViewListener != null) {
             onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(),EasyEventType.SELECTED);
         }
-        this.invalidate();
     }
 
     /**
@@ -291,7 +291,6 @@ public abstract class BaseEasyDesignView extends View  {
         if (getSelectedEasyDesign() != null && isInEasyDesignBitmap(getSelectedEasyDesign().matrix,getSelectedEasyDesign().getSrcRect(),downPoint)) {
             getSelectedEasyDesign().postTranslate((curX - preX) * drawDensity, (curY - preY) * drawDensity);
         }
-        invalidate();
     }
 
     /**

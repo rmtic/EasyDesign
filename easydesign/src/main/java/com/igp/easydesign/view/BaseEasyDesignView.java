@@ -119,24 +119,6 @@ public abstract class BaseEasyDesignView extends View  {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        /**判断是否模糊*/
-        if (getSelectedEasyDesign() != null) {
-            if( getSelectedEasyDesign() instanceof LocalImageEasyDesign ){
-                int areaDesignWidthPx  =  ConvertUtils.dp2px(getEasySpace().getRect().width());
-                int areaDesignHeightPx =  ConvertUtils.dp2px(getEasySpace().getRect().height());
-                ((LocalImageEasyDesign) getSelectedEasyDesign()).setBulr(EasyDesignHelper.isBlurImage(((LocalImageEasyDesign) getSelectedEasyDesign()),((LocalImageEasyDesign) getSelectedEasyDesign()).getOriginalWidthDp(),((LocalImageEasyDesign) getSelectedEasyDesign()).getOriginalHeightDp(),areaDesignWidthPx,areaDesignHeightPx,getEasySpace().paramsWidthCM));
-            }else if(getSelectedEasyDesign() instanceof RemoteImageEasyDesign){
-                int areaDesignWidthPx  =  ConvertUtils.dp2px(getEasySpace().getRect().width());
-                int areaDesignHeightPx =  ConvertUtils.dp2px(getEasySpace().getRect().height());
-                ((RemoteImageEasyDesign) getSelectedEasyDesign()).setBulr(EasyDesignHelper.isBlurImage(((RemoteImageEasyDesign) getSelectedEasyDesign()),((RemoteImageEasyDesign) getSelectedEasyDesign()).getOriginalWidthDp(),((RemoteImageEasyDesign) getSelectedEasyDesign()).getOriginalHeightDp(),areaDesignWidthPx,areaDesignHeightPx,getEasySpace().paramsWidthCM));
-            }
-        }
-
-        /** 当前设计发生变化会触发onEasyDesignChange（）*/
-        if (onEasyDesignViewListener != null && getSelectedEasyDesign() != null) {
-            onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(),EasyEventType.RESIZE);
-        }
-
         /** 绘制控制层,绘制矩阵范围的背景 */
         if (getEasyControl() != null && getEasyControl().getBindEasyDesign() != null ) {
             if(enableDrawDstRectBg)  {getEasyControl() .drawDstRectBg(canvas);    }
@@ -225,6 +207,7 @@ public abstract class BaseEasyDesignView extends View  {
                     default:
                         break;
                 }
+                change();
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
@@ -238,6 +221,26 @@ public abstract class BaseEasyDesignView extends View  {
         return true;
     }
 
+    //todo 待修改
+    public void change(){
+        /**判断是否模糊*/
+        if (getSelectedEasyDesign() != null) {
+            if( getSelectedEasyDesign() instanceof LocalImageEasyDesign ){
+                int areaDesignWidthPx  =  ConvertUtils.dp2px(getEasySpace().getRect().width());
+                int areaDesignHeightPx =  ConvertUtils.dp2px(getEasySpace().getRect().height());
+                ((LocalImageEasyDesign) getSelectedEasyDesign()).setBulr(EasyDesignHelper.isBlurImage(((LocalImageEasyDesign) getSelectedEasyDesign()),((LocalImageEasyDesign) getSelectedEasyDesign()).getOriginalWidthDp(),((LocalImageEasyDesign) getSelectedEasyDesign()).getOriginalHeightDp(),areaDesignWidthPx,areaDesignHeightPx,getEasySpace().paramsWidthCM));
+            }else if(getSelectedEasyDesign() instanceof RemoteImageEasyDesign){
+                int areaDesignWidthPx  =  ConvertUtils.dp2px(getEasySpace().getRect().width());
+                int areaDesignHeightPx =  ConvertUtils.dp2px(getEasySpace().getRect().height());
+                ((RemoteImageEasyDesign) getSelectedEasyDesign()).setBulr(EasyDesignHelper.isBlurImage(((RemoteImageEasyDesign) getSelectedEasyDesign()),((RemoteImageEasyDesign) getSelectedEasyDesign()).getOriginalWidthDp(),((RemoteImageEasyDesign) getSelectedEasyDesign()).getOriginalHeightDp(),areaDesignWidthPx,areaDesignHeightPx,getEasySpace().paramsWidthCM));
+            }
+        }
+
+        /** 当前设计发生变化会触发onEasyDesignChange（）*/
+        if (onEasyDesignViewListener != null && getSelectedEasyDesign() != null) {
+            onEasyDesignViewListener.onEasyDesignChange(getSelectedEasyDesign(),EasyEventType.RESIZE);
+        }
+    }
 
 
 

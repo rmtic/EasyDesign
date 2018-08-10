@@ -238,6 +238,7 @@ public class EasyDesignView extends BaseEasyDesignView {
         p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         if(null != getBaseEasyDesigns()) {
             for (BaseEasyDesign baseEasyDesign : getBaseEasyDesigns()) {
+                baseEasyDesign.setSelected(false);
                 baseEasyDesign.draw(canvas);
             }
         }

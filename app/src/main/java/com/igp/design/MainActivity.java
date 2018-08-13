@@ -3,6 +3,7 @@ package com.igp.design;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.drivemode.android.typeface.TypefaceHelper;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.LocalImageEasyDesign;
@@ -98,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
                 textEasyDesign2.setTextColor(Color.BLUE);
                 mEasyDesignView.addEasyDesign(textEasyDesign2);                                    //添加文本设计*/
                 break;
+            case R.id.action_typeface:
+                setTypeFace();
+                break;
             default:
                 break;
         }
@@ -116,14 +121,14 @@ public class MainActivity extends AppCompatActivity {
 
        mEasyDesignView   = findViewById(R.id.easydesignview);
 
-        mEasyDesignView.setEnableDrawDstRectBg  (true);                                                                                                            //是否允许绘制背景
+        mEasyDesignView.setEnableDrawDstRectBg  (false);                                                                                                            //是否允许绘制背景
         mEasyDesignView.setEnableDrawEasySpace  (true);                                                                                                            //是否允许绘制设计区
-        mEasyDesignView.setEnableDrawEasyMask   (true);                                                                                                            //是否允许绘制遮罩
-        mEasyDesignView.setEnableDrawDstPsLine  (true);                                                                                                            //是否绘制小矩形边框
-        mEasyDesignView.setEnableDrawDstRectLine(true);                                                                                                            //是否绘制矩阵范围的框
-        mEasyDesignView.setEnableDrawGridLine   (true);                                                                                                            //是否绘制矩阵范围的网格
-        mEasyDesignView.setEnableDrawDstpsPoint (true);                                                                                                            //是否绘制矩阵点
-        mEasyDesignView.setEnableDrawLeetToptips(true);                                                                                                            //是否绘制提示文字
+        mEasyDesignView.setEnableDrawEasyMask   (false);                                                                                                            //是否允许绘制遮罩
+        mEasyDesignView.setEnableDrawDstPsLine  (false);                                                                                                            //是否绘制小矩形边框
+        mEasyDesignView.setEnableDrawDstRectLine(false);                                                                                                            //是否绘制矩阵范围的框
+        mEasyDesignView.setEnableDrawGridLine   (false);                                                                                                            //是否绘制矩阵范围的网格
+        mEasyDesignView.setEnableDrawDstpsPoint (false);                                                                                                            //是否绘制矩阵点
+        mEasyDesignView.setEnableDrawLeetToptips(false);                                                                                                            //是否绘制提示文字
         mEasyDesignView.setEnableDrawEasyIcons  (true);                                                                                                            //是否绘制控制图标
 
        /**创建相关图片*/
@@ -145,15 +150,18 @@ public class MainActivity extends AppCompatActivity {
 
         /** 平台 和 控制层 的配置     */
 
+        //设计区
         EasySpace easySpace = EasyDesignHelper.createEasySpace(150,50,650,700, Color.WHITE,10,10);
-        easySpace.setBgColor(Color.WHITE);
+        easySpace.setBgColor(Color.BLACK);
         mEasyDesignView.setEasySpace(easySpace);
 
+        //遮罩
         EasyMask easyMask = EasyDesignHelper.createEasyMask(EasyDesignHelper.getLocalBitmap(MainActivity.this,R.drawable.bg_mask));
         mEasyDesignView.setEasyMask(easyMask);
 
        List<EasyIcon> easyIconList = new ArrayList<>();                                             //控制器【图标集合】
-       EasyIcon easyIcon = new EasyIcon(draftBoxUncheck,EasyIconType.RIGHT_BOTTOM);                //添加  【右下角图标】
+       EasyIcon easyIcon = new EasyIcon(draftBoxUncheck,EasyIconType.RIGHT_BOTTOM);                 //添加  【右下角图标】
+       easyIcon.setAlpha(100);
        easyIconList.add(easyIcon);
 
 
@@ -165,8 +173,7 @@ public class MainActivity extends AppCompatActivity {
                    case RESIZE:
                        if (easyDesign instanceof ImageEasyDesign) {
                            //用来判断模糊
-                           Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicWidthDp():"  + ((ImageEasyDesign) easyDesign).getDstPsWidthDp());
-                           Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicHeightDp():" + ((ImageEasyDesign) easyDesign).getDstPsHeightDp());
+                           Log.i("print", "((ImageEasyDesign) easyDesign).getDynamicWidthDp():"  + ((ImageEasyDesign) easyDesign).isBulr());
                        }
                        break;
                    case ADD:
@@ -189,9 +196,9 @@ public class MainActivity extends AppCompatActivity {
 
        stickImageDesign.postTranslate(easySpace.getRect().centerX(),easySpace.getRect().centerY());
 
-       mEasyDesignView.addEasyDesign(localImageDesign);                                             //添加一个图片设计模型
-       mEasyDesignView.addEasyDesign(remoteImageDesign);                                            //添加一个图片设计模型
-       mEasyDesignView.addEasyDesign(stickImageDesign);                                             //添加一个贴纸设计模型
+      // mEasyDesignView.addEasyDesign(localImageDesign);                                             //添加一个图片设计模型
+      // mEasyDesignView.addEasyDesign(remoteImageDesign);                                            //添加一个图片设计模型
+      // mEasyDesignView.addEasyDesign(stickImageDesign);                                             //添加一个贴纸设计模型
 
 
        textEasyDesign =  EasyDesignHelper.createTextEasyDesign("TEXT HERE");//文本设计
@@ -240,11 +247,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
        /** 相关手动操作设计的实现 */
        //mEasyDesignView.setSelectedEasyDesign(remoteImageDesign);                                   //手动操作【选中】
        //remoteImageDesign.postTranslate(300,500);                                                   //手动操作【移动】
        //remoteImageDesign.postRotate(45);                                                           //手动操作【旋转】
        //动画旋转
        //动画放大
+    }
+
+    /**
+     * 设置字体
+     */
+    public void setTypeFace(){
+        Typeface face = TypefaceHelper.getInstance().getTypeface(String.format("fonts/%s.ttf", "Mrs Sheppards"));
+        if (mEasyDesignView.getSelectedEasyDesign() != null && mEasyDesignView.getSelectedEasyDesign() instanceof TextEasyDesign) {
+            ((TextEasyDesign) mEasyDesignView.getSelectedEasyDesign()).setTypeface(face);
+        }
+        mEasyDesignView.invalidate();
     }
 }

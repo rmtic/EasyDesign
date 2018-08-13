@@ -14,6 +14,7 @@ public class EasyIcon {
     private Bitmap       bitmap;
     private RectF        rectF;
     private EasyIconType easyIconType;
+    private int alpha = 255;
 
     public EasyIcon(Bitmap bitmap,EasyIconType easyIconType) {
         this.bitmap = bitmap;
@@ -49,5 +50,18 @@ public class EasyIcon {
 
     public void setEasyIconType(EasyIconType easyIconType) {
         this.easyIconType = easyIconType;
+    }
+
+    public int getAlpha() {
+        return alpha;
+    }
+
+    /**
+     * Interval
+     * min 0 max 255
+     * @param alpha
+     */
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
     }
 }

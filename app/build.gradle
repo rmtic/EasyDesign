@@ -27,4 +27,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':easydesign')
     implementation 'com.blankj:utilcode:1.17.3'
+    implementation 'com.drivemode:TypefaceHelper:1.2.0@aar'
 }

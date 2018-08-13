@@ -33,5 +33,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.blankj:utilcode:1.17.3'
     api 'org.michaelevans.colorart:library:0.0.3'
-
 }

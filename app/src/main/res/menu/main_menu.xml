@@ -49,5 +49,9 @@
         android:orderInCategory="0"
         android:title="复制"
         app:showAsAction="ifRoom" />
-
+    <item
+        android:id="@+id/action_typeface"
+        android:orderInCategory="0"
+        android:title="设置字体"
+        app:showAsAction="ifRoom" />
 </menu>

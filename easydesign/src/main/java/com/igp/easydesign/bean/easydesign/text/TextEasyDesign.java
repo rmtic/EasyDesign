@@ -1,6 +1,7 @@
 package com.igp.easydesign.bean.easydesign.text;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -82,8 +83,8 @@ public class TextEasyDesign extends BaseEasyDesign{
                 0,boundHeight/2,
                 boundWidth/2,boundHeight/2};
         float[]  dstPs       = srcPs.clone();
-        this.srcPs = srcPs;
-        this.dstPs = dstPs;
+        this.srcPs   = srcPs;
+        this.dstPs   = dstPs;
         this.srcRect = srcRect;
         this.dstRect = dstRect;
         update();
@@ -126,6 +127,41 @@ public class TextEasyDesign extends BaseEasyDesign{
         path.lineTo(dstPs[8],dstPs[9]);
         canvas.drawTextOnPath(content,path,0,0,paint);
 
+
+
+        //文字绘制辅助
+       /* Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+
+        float baseLineX = dstPs[12];
+        float baseLineY = dstPs[13];
+        float top       = fontMetrics.top + baseLineY;
+        float ascent    = fontMetrics.ascent + baseLineY;
+        float descent   = fontMetrics.descent + baseLineY;
+        float bottom    = fontMetrics.bottom + baseLineY;
+        float leadingY  = fontMetrics.leading + baseLineY;
+
+        //绘制基线
+        paint.setColor(Color.parseColor("#FF1493"));
+        canvas.drawLine(dstRect.left, baseLineY, dstRect.right, baseLineY, paint);
+
+        //绘制top直线
+        paint.setColor(Color.parseColor("#FFB90F"));
+        canvas.drawLine(dstRect.left, top, dstRect.right, top, paint);
+
+        //绘制ascent直线-------------------------------
+        paint.setColor(Color.parseColor("#b03060"));
+        canvas.drawLine(dstRect.left, ascent, dstRect.right, ascent, paint);
+
+        //绘制descent直线
+        paint.setColor(Color.parseColor("#912cee"));
+        canvas.drawLine(dstRect.left, descent, dstRect.right, descent, paint);
+
+        //绘制bottom直线-------------------------------
+        paint.setColor(Color.parseColor("#1E90FF"));
+        canvas.drawLine(dstRect.left, bottom, dstRect.right, bottom, paint);*/
+
+
+
     }
 
     /**
@@ -149,24 +185,6 @@ public class TextEasyDesign extends BaseEasyDesign{
         paint.setTextSize(desiredTextSize);
     }
 
-    /**
-     * 计算字体宽度
-     * @param paint
-     * @param str
-     * @return
-     */
-    public static int getTextWidth(Paint paint, String str) {
-        int iRet = 0;
-        if (str != null && str.length() > 0) {
-            int len = str.length();
-            float[] widths = new float[len];
-            paint.getTextWidths(str, widths);
-            for (int j = 0; j < len; j++) {
-                iRet += (int) Math.ceil(widths[j]);
-            }
-        }
-        return iRet;
-    }
 
     public float getTextSize(){
         return paint.getTextSize();
@@ -222,6 +240,29 @@ public class TextEasyDesign extends BaseEasyDesign{
         paint.setTypeface(typeface);
         setContent(content);//重新设置宽高
         return this;
+    }
+
+
+
+
+    /**
+     * 计算字体宽度
+     * int textWidth = getTextWidth(paint, str);
+     * @param paint
+     * @param str
+     * @return
+     */
+    public static int getTextWidth(Paint paint, String str) {
+        int iRet = 0;
+        if (str != null && str.length() > 0) {
+            int len = str.length();
+            float[] widths = new float[len];
+            paint.getTextWidths(str, widths);
+            for (int j = 0; j < len; j++) {
+                iRet += (int) Math.ceil(widths[j]);
+            }
+        }
+        return iRet;
     }
 
   /*  public Object clone()

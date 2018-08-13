@@ -236,6 +236,7 @@ public class EasyDesignHelper {
                 mainBmpWidth/2,mainBmpHeight/2};
         float[]  dstPs       = srcPs.clone();
         Matrix matrix        = new Matrix();
+
         return new ImageEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,bitmap);
     }
     //创建一个文本设计
@@ -264,7 +265,6 @@ public class EasyDesignHelper {
         Matrix matrix        = new Matrix();
         TextEasyDesign textEasyDesign = new TextEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix);
         textEasyDesign.setContent(label);
-
         //旧版本文本设计
        /*Paint paint = new Paint();
         Rect rect = new Rect();

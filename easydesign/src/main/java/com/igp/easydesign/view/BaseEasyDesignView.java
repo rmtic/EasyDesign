@@ -158,8 +158,6 @@ public abstract class BaseEasyDesignView extends View  {
     }
 
 
-
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         int evX = (int)event.getX();

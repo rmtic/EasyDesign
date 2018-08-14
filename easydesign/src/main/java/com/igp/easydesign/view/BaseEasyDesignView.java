@@ -23,6 +23,7 @@ import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.icon.EasyIconType;
 import com.igp.easydesign.bean.mask.EasyMask;
 import com.igp.easydesign.bean.space.EasySpace;
+import com.igp.easydesign.bean.tips.EasyTips;
 import com.igp.easydesign.helper.EasyDesignHelper;
 
 import java.util.List;
@@ -393,6 +394,7 @@ public abstract class BaseEasyDesignView extends View  {
 
 
     public abstract void setEasyIconList(List<EasyIcon> easyIconList);
+    //public abstract void setEasyTipsList(List<EasyTips> easyTipsList);
 
 
     /**
@@ -580,7 +582,7 @@ public abstract class BaseEasyDesignView extends View  {
         return enableDrawLeetToptips;
     }
 
-    public void setEnableDrawLeetToptips(boolean enableDrawLeetToptips) {
+    public void setEnableDrawLeftToptips(boolean enableDrawLeetToptips) {
         this.enableDrawLeetToptips = enableDrawLeetToptips;
     }
 

@@ -90,30 +90,33 @@ public class EasyDesignHelper {
      * @return
      */
     public static Bitmap createEasyIconBitmap(Bitmap bitmap){
-        Bitmap resultBitmap = Bitmap.createBitmap(80,80,Bitmap.Config.ARGB_8888);
+        Bitmap resultBitmap = Bitmap.createBitmap(50,50,Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(resultBitmap);
-        RectF rectF = new RectF(0,0,80,80);
+        RectF rectF = new RectF(0,0,50,50);
         Rect rect = new Rect(0,0,bitmap.getWidth(),bitmap.getHeight());
         canvas.drawBitmap(bitmap,rect,rectF,null);
         return resultBitmap;
     }
 
-    public static EasyMask createEasyMask(Bitmap bitmap){
-        Bitmap resultBitmap = Bitmap.createBitmap(ScreenUtils.getScreenWidth(),ScreenUtils.getScreenHeight() - (BarUtils.getStatusBarHeight() + BarUtils.getActionBarHeight()),Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(resultBitmap);
-        RectF rectF = new RectF(0,0,ScreenUtils.getScreenWidth(),ScreenUtils.getScreenWidth());
-        Rect rect = new Rect(0,0,bitmap.getWidth(),bitmap.getHeight());
-        canvas.drawBitmap(bitmap,rect,rectF,null);
+    public static EasyMask createEasyMask(int easyDesignWidth ,int easyDesignHeight , Bitmap bitmap){
+        EasyMask easyMask = null;
+        if(easyDesignHeight != 0 || easyDesignWidth != 0 ){
+            Bitmap resultBitmap = Bitmap.createBitmap(easyDesignWidth,easyDesignHeight,Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(resultBitmap);
+            RectF rectF = new RectF(0,0,easyDesignWidth,easyDesignWidth);
+            Rect rect = new Rect(0,0,bitmap.getWidth(),bitmap.getHeight());
+            canvas.drawBitmap(bitmap,rect,rectF,null);
 
-        //获取图片的主题色，并且绘制遮罩图片无法覆盖的部分
-        ColorArt colorArt = new ColorArt(resultBitmap);
-        RectF rectF2 = new RectF(0,ScreenUtils.getScreenHeight() - ScreenUtils.getScreenWidth() + BarUtils.getNavBarHeight()+ BarUtils.getStatusBarHeight(),ScreenUtils.getScreenWidth(),ScreenUtils.getScreenHeight());
-        Paint paint = new Paint();
-        paint.setColor(colorArt.getBackgroundColor());
-        canvas.drawRect(rectF2,paint);
+            //获取图片的主题色，并且绘制遮罩图片无法覆盖的部分
+            ColorArt colorArt = new ColorArt(resultBitmap);
+            RectF rectF2 = new RectF(0,easyDesignWidth - 1,easyDesignWidth,easyDesignHeight);
+            Paint paint = new Paint();
+            paint.setColor(colorArt.getBackgroundColor());
+            canvas.drawRect(rectF2,paint);
 
-        EasyMask easyMask = new EasyMask();
-        easyMask.setMaskBitmap(resultBitmap);
+            easyMask = new EasyMask();
+            easyMask.setMaskBitmap(resultBitmap);
+        }
         return easyMask;
     }
 

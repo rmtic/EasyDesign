@@ -16,6 +16,7 @@ import com.igp.easydesign.bean.easydesign.image.LocalImageEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.RemoteImageEasyDesign;
 import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.icon.EasyIconType;
+import com.igp.easydesign.bean.tips.EasyTips;
 import com.igp.easydesign.helper.EasyDesignHelper;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class EasyControl extends BaseEasyControl {
     private float []       srcPs   ,dstPs;
     public RectF           srcRect ,dstRect;
     public List<EasyIcon>  mEasyIconList = new ArrayList<>();
+    public List<EasyTips>  mEasyTips     = new ArrayList<>();
     private Bitmap         mBitmapWarning;
 
     @Override
@@ -161,6 +163,7 @@ public class EasyControl extends BaseEasyControl {
         if (easyDesign.getDstRect() == null) { return; }
         dstRect = easyDesign.getDstRect();
         dstPs   = easyDesign.getDstPs();
+
         float tipBoxTopDistance = 20;
         float tipBoxHeight      = 50;
         float tipBoxWidth       = 120;
@@ -189,7 +192,12 @@ public class EasyControl extends BaseEasyControl {
             }
         }
 
-
+       /* if (getEasyTipsList() != null) {
+            for (EasyTips easyTips : getEasyTipsList()) {
+                easyTips.getPaint().setColor(easyTips.getColor());
+                canvas.drawText(easyTips.getLabel(),dstRect.left,dstRect.top - (int)(getEasyTipsList().indexOf(easyTips)) * easyTips.getLineHeight() ,easyTips.getPaint());
+            }
+        }*/
     }
 
 
@@ -294,6 +302,16 @@ public class EasyControl extends BaseEasyControl {
 
         }
     }
+
+    /*@Override
+    public List<EasyTips> getEasyTipsList() {
+        return this.mEasyTips;
+    }
+
+    @Override
+    public void setEasyTipsList(List<EasyTips> tipsList) {
+        this.mEasyTips = tipsList;
+    }*/
 
     /**绘制网格线*/
     protected void drawGrid(Canvas canvas, RectF cropBounds, float scale, int lineNum, Paint paint) {

@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -25,6 +26,7 @@ import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.icon.EasyIconType;
 import com.igp.easydesign.bean.mask.EasyMask;
 import com.igp.easydesign.bean.space.EasySpace;
+import com.igp.easydesign.bean.tips.EasyTips;
 import com.igp.easydesign.helper.EasyDesignHelper;
 import com.igp.easydesign.view.EasyDesignView;
 import com.igp.easydesign.view.EasyEventType;
@@ -34,11 +36,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EasyDesignView   mEasyDesignView;
-    private EditText etInput;
-    LocalImageEasyDesign  localImageDesign;
-    RemoteImageEasyDesign remoteImageDesign;
-    StickImageDesign      stickImageDesign;
+    private EasyDesignView mEasyDesignView;
+    private EditText       etInput;
+    LocalImageEasyDesign   localImageDesign;
+    RemoteImageEasyDesign  remoteImageDesign;
+    StickImageDesign       stickImageDesign;
 
 
     TextEasyDesign textEasyDesign;
@@ -115,21 +117,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
-
        mEasyDesignView   = findViewById(R.id.easydesignview);
 
-        mEasyDesignView.setEnableDrawDstRectBg  (false);                                                                                                            //是否允许绘制背景
-        mEasyDesignView.setEnableDrawEasySpace  (true);                                                                                                            //是否允许绘制设计区
-        mEasyDesignView.setEnableDrawEasyMask   (false);                                                                                                            //是否允许绘制遮罩
-        mEasyDesignView.setEnableDrawDstPsLine  (false);                                                                                                            //是否绘制小矩形边框
-        mEasyDesignView.setEnableDrawDstRectLine(false);                                                                                                            //是否绘制矩阵范围的框
+        mEasyDesignView.setEnableDrawDstRectBg  (true);                                                                                                            //是否允许绘制背景
+        mEasyDesignView.setEnableDrawEasySpace  (true);                                                                                                             //是否允许绘制设计区
+        mEasyDesignView.setEnableDrawEasyMask   (true);                                                                                                            //是否允许绘制遮罩
+        mEasyDesignView.setEnableDrawDstPsLine  (true);                                                                                                            //是否绘制小矩形边框
+        mEasyDesignView.setEnableDrawDstRectLine(true);                                                                                                            //是否绘制矩阵范围的框
         mEasyDesignView.setEnableDrawGridLine   (false);                                                                                                            //是否绘制矩阵范围的网格
         mEasyDesignView.setEnableDrawDstpsPoint (false);                                                                                                            //是否绘制矩阵点
-        mEasyDesignView.setEnableDrawLeetToptips(false);                                                                                                            //是否绘制提示文字
-        mEasyDesignView.setEnableDrawEasyIcons  (true);                                                                                                            //是否绘制控制图标
+        mEasyDesignView.setEnableDrawLeftToptips(false);                                                                                                            //是否绘制提示文字
+        mEasyDesignView.setEnableDrawEasyIcons  (true);                                                                                                             //是否绘制控制图标
 
        /**创建相关图片*/
        Bitmap bitmap1           = EasyDesignHelper.getLocalBitmap(MainActivity.this,R.mipmap.test);                                                      //创建【图片设计1】
@@ -156,14 +154,28 @@ public class MainActivity extends AppCompatActivity {
         mEasyDesignView.setEasySpace(easySpace);
 
         //遮罩
-        EasyMask easyMask = EasyDesignHelper.createEasyMask(EasyDesignHelper.getLocalBitmap(MainActivity.this,R.drawable.bg_mask));
-        mEasyDesignView.setEasyMask(easyMask);
+        ViewTreeObserver vto = mEasyDesignView.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                EasyMask easyMask = EasyDesignHelper.createEasyMask(mEasyDesignView.getWidth(),mEasyDesignView.getHeight(),EasyDesignHelper.getLocalBitmap(MainActivity.this,R.drawable.bg_mask));
+                mEasyDesignView.setEasyMask(easyMask);
+            }
+        });
+
+
+
+        //调试Tips
+
+        /*final EasyTips easyTips = new EasyTips("测试1",Color.WHITE,25);
+        List<EasyTips> easyTipsList = new ArrayList<>();
+        easyTipsList.add(easyTips);
+        mEasyDesignView.setEasyTipsList(easyTipsList);*/
 
        List<EasyIcon> easyIconList = new ArrayList<>();                                             //控制器【图标集合】
        EasyIcon easyIcon = new EasyIcon(draftBoxUncheck,EasyIconType.RIGHT_BOTTOM);                 //添加  【右下角图标】
        easyIcon.setAlpha(100);
        easyIconList.add(easyIcon);
-
 
        mEasyDesignView.setEasyIconList(easyIconList);                                               //给控制器设置一组图标
        mEasyDesignView.setOnEasyDesignViewListener(new OnEasyDesignViewListener() {

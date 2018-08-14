@@ -265,19 +265,4 @@ public class TextEasyDesign extends BaseEasyDesign{
         return iRet;
     }
 
-  /*  public Object clone()
-    {
-        TextEasyDesign o=null;
-        try
-        {
-            o=(TextEasyDesign)super.clone();
-        }
-        catch(CloneNotSupportedException e)
-        {
-            System.out.println(e.toString());
-        }
-        o.srcPs=(float[])srcPs.clone();
-        o.dstPs=(float[])dstPs.clone();
-        return o;
-    }*/
 }

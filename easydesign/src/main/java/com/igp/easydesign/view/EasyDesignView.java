@@ -15,6 +15,7 @@ import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.mask.EasyMask;
 import com.igp.easydesign.bean.space.EasySpace;
+import com.igp.easydesign.bean.tips.EasyTips;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,13 @@ public class EasyDesignView extends BaseEasyDesignView {
             getEasyControl().setEasyIconList(easyIconList);
         }
     }
+
+    /*@Override
+    public void setEasyTipsList(List<EasyTips> easyTipsList) {
+        if (getEasyControl() != null) {
+            getEasyControl().setEasyTipsList(easyTipsList);
+        }
+    }*/
 
 
     @Override

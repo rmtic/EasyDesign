@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.bean.icon.EasyIcon;
 import com.igp.easydesign.bean.icon.EasyIconType;
+import com.igp.easydesign.bean.tips.EasyTips;
 
 import java.util.List;
 
@@ -32,4 +33,6 @@ public abstract class BaseEasyControl {
     public abstract void setEasyIconList(List<EasyIcon> easyIconList);                              //设置图标列表
     public abstract List<EasyIcon> getEasyIconList();                                               //获取图标列表
     public abstract void drawEasyIcons(Canvas canvas);                                              //绘制所有图标
+    //public abstract List<EasyTips> getEasyTipsList();                                               //获取提示语列表
+    //public abstract void setEasyTipsList(List<EasyTips> tipsList);                                  //设置提示语列表
 }

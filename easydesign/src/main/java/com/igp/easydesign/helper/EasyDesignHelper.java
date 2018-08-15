@@ -108,7 +108,7 @@ public class EasyDesignHelper {
             canvas.drawBitmap(bitmap,rect,rectF,null);
 
             //获取图片的主题色，并且绘制遮罩图片无法覆盖的部分
-            ColorArt colorArt = new ColorArt(resultBitmap);
+            ColorArt colorArt = new ColorArt(bitmap);
             RectF rectF2 = new RectF(0,easyDesignWidth - 1,easyDesignWidth,easyDesignHeight);
             Paint paint = new Paint();
             paint.setColor(colorArt.getBackgroundColor());

@@ -164,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         //调试Tips
 
         /*final EasyTips easyTips = new EasyTips("测试1",Color.WHITE,25);

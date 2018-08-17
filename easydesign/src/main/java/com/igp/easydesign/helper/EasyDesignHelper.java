@@ -24,6 +24,7 @@ import com.igp.easydesign.bean.easydesign.BaseEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.ImageEasyDesignType;
 import com.igp.easydesign.bean.easydesign.image.LocalImageEasyDesign;
+import com.igp.easydesign.bean.easydesign.image.RemoteBackgroundEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.RemoteImageEasyDesign;
 import com.igp.easydesign.bean.easydesign.image.StickImageDesign;
 import com.igp.easydesign.bean.easydesign.text.TextEasyDesign;
@@ -189,6 +190,34 @@ public class EasyDesignHelper {
         Matrix matrix        = new Matrix();
         RemoteImageEasyDesign remoteImageEasyDesign = new RemoteImageEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,bitmap,originalImgWidth,originalImgHeight);
         return remoteImageEasyDesign;
+    }
+
+    /**
+     * 创建远程图片设计
+     * @param bitmap
+     * @param originalImgWidth
+     * @param originalImgHeight
+     * @return
+     */
+    public static RemoteBackgroundEasyDesign createRemoteBlackgroundImageEasyDesign(Bitmap bitmap , int originalImgWidth , int originalImgHeight){
+        int     bitmapWidth  = bitmap.getWidth();
+        int     bitmapHeight = bitmap.getHeight();
+        RectF srcRect        = new RectF(0, 0, bitmapWidth, bitmapHeight);
+        RectF   dstRect      = new RectF();
+        float[] srcPs        = new float[]{
+                0,0,
+                bitmapWidth/2,0,
+                bitmapWidth,0,
+                bitmapWidth,bitmapHeight/2,
+                bitmapWidth,bitmapHeight,
+                bitmapWidth/2,bitmapHeight,
+                0,bitmapHeight,
+                0,bitmapHeight/2,
+                bitmapWidth/2,bitmapHeight/2};
+        float[]  dstPs       = srcPs.clone();
+        Matrix matrix        = new Matrix();
+        RemoteBackgroundEasyDesign remoteBackgroundEasyDesign = new RemoteBackgroundEasyDesign(srcPs,dstPs,srcRect,dstRect,matrix,bitmap,originalImgWidth,originalImgHeight);
+        return remoteBackgroundEasyDesign;
     }
 
     /**

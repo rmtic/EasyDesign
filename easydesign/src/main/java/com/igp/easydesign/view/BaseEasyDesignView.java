@@ -144,6 +144,7 @@ public abstract class BaseEasyDesignView extends View  {
             if (baseEasyDesign.isSelected()) {
                 baseEasyDesign.getPaint().setAlpha(20);
                 baseEasyDesign.draw(canvas);
+                baseEasyDesign.getPaint().setAlpha(255);
             }
         }
 

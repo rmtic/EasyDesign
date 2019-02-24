@@ -17,3 +17,4 @@ Step 2. Add the dependency
 	        implementation 'com.github.rmtic:EasyDesign:1.0.3'
 	}
 
+https://github.com/HelloChenJinJun/NewFastFrame
